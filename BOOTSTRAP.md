@@ -18,8 +18,13 @@ Then decide based on the trigger payload:
 - Payload asks for a case study / Fallstudie or has a review ID for one -> read and follow
   tm-skills/skills/trustmarkt-case-study-writer/SKILL.md
 
-The Trustmarkt API token is in the TRUSTMARKT_API_TOKEN environment variable.
-Always follow the SKILL.md from the repo, not from memory — it may have changed.
+After an article draft is created, the article skill chains into
+tm-skills/skills/trustmarkt-article-images/SKILL.md to generate cover + section
+images and upload them to Google Drive.
+
+Environment variables: TRUSTMARKT_API_TOKEN (API), GEMINI_API_KEY (images —
+if unset, skip images and note it in the report).
+Always follow the SKILL.md files from the repo, not from memory — they may have changed.
 ```
 
 That's it. Never copy the skill content into the routine itself.

@@ -20,10 +20,13 @@ Then decide based on the trigger payload:
 
 After an article draft is created, the article skill chains into
 tm-skills/skills/trustmarkt-article-images/SKILL.md to generate cover + section
-images and upload them to Google Drive.
+images, verify each locally, and push the verified ones to an n8n webhook
+that uploads them to Google Drive.
 
 Environment variables: TRUSTMARKT_API_TOKEN (API), GEMINI_API_KEY (images —
-if unset, skip images and note it in the report).
+if unset, skip images and note it in the report), N8N_IMAGE_WEBHOOK_URL and
+N8N_IMAGE_DRIVE_FOLDER_ID (image delivery — if unset, skip the push step and
+note it in the report).
 Always follow the SKILL.md files from the repo, not from memory — they may have changed.
 ```
 

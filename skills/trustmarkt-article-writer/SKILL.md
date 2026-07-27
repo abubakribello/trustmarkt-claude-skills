@@ -72,9 +72,9 @@ Expand these with concrete tools/branches (X = tool/service, Y = audience segmen
    ```
    The script validates constraints before sending. On success it prints the article ID, slug, and status.
 
-4. **Generate the image set.** After the draft is created, run the companion skill `trustmarkt-article-images` (in a repo checkout: `skills/trustmarkt-article-images/SKILL.md`) using this article's draft and image plan — it generates cover variants plus section images and uploads them to Google Drive. Skip only if `GEMINI_API_KEY` is not set, and say so in the report.
+4. **Generate the image set.** After the draft is created, run the companion skill `trustmarkt-article-images` (in a repo checkout: `skills/trustmarkt-article-images/SKILL.md`) using this article's draft and image plan — it generates cover variants plus section images, verifies each locally, then pushes the verified ones to an n8n webhook that uploads them to Google Drive. Skip only if `GEMINI_API_KEY` or `N8N_IMAGE_WEBHOOK_URL` is not set, and say so in the report.
 
-5. **Report back** with the article ID, title, word count, the Drive folder with the image set (or why it was skipped), and a reminder that images are inserted and the article submitted for review in the Trustmarkt web editor.
+5. **Report back** with the article ID, title, word count, how many images were pushed to Drive via the webhook (or why it was skipped), and a reminder that images are inserted and the article submitted for review in the Trustmarkt web editor.
 
 To revise an existing draft: `python scripts/trustmarkt_api.py update-article --id <ID> --title "..." --content-file draft.md`. Only `DRAFT` or `REJECTED` articles can be updated — the API returns 422 otherwise.
 
@@ -86,7 +86,7 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 
 - **Length: 1,000–1,600 words.** Under ~900 words reads thin next to the benchmarks. Product-explainer pieces may be shorter (~700); guides and opinion pieces sit at 1,200–1,600.
 - **Title:** provocative or concrete-benefit, often with numbers, a year, or a proof-claim in parentheses. Benchmark examples: "Was ein Voice-Agent wirklich kostet und wie viele Vertriebler er ersetzt", "Warum manche Agenturen mit 3 Mitarbeitern reicher werden als andere mit 10", "Lohnt sich Prozessautomatisierung für Agenturen wirklich? (Mit echten Zahlen)"
-- **Hook intro (no H1 — the title is the H1):** open with a concrete scenario or pain the reader recognizes ("Du scrollst durch deine WhatsApp-Chats und stellst fest: jeden Tag die gleichen Fragen..."), then promise what the article delivers. 2–3 short paragraphs max.
+- **Hook intro (no H1 — the title is the H1):** open with a concrete scenario or pain the reader recognizes ("Du scrollst durch deine WhatsApp-Chats und stellst fest: jeden Tag die gleichen Fragen..."), then promise what the article delivers. **At least 2 paragraphs before the first `##` heading, 2–3 short paragraphs max** — Trustmarkt's own editor validation rejects a single-paragraph intro. Don't fold the hook and the "here's what this delivers" payoff into one long paragraph; split them.
 - **H2s are statements, not labels:** "Warum niedrige Margen keine Option sind" beats "Vorteile". H3s for sub-points.
 - **Concrete numbers in every article.** Costs in €, percentages, time saved, prices per unit ("ca. 4,5 Cent pro Nachricht", "4.550 € pro Monat, pro Kopf"). A worked calculation ("Die Rechnung, die kaum jemand macht") is a benchmark signature. Never invent numbers — use researched, sourced, or company-provided figures.
 - **Use a GFM table** when comparing options/before-after (benchmarks do this constantly: Vertriebler vs. Voice-AI, klassisch vs. automatisiert).
@@ -105,6 +105,7 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 5. 1–3 callouts, 1–3 internal case-study/profile links, soft CTA at the end
 6. Title 10–90 chars, no H1 in body, only supported Markdown, no images/HTML
 7. Fazit with a concrete next step
+8. **≥2 paragraphs before the first `##` heading** — Trustmarkt's editor flags this specifically ("Introduction: There must be at least two paragraphs before the first heading"); a single merged paragraph fails validation even if everything else is fine
 
 ### Image plan (report, not article body)
 

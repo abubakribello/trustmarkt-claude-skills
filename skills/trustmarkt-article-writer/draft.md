@@ -18,8 +18,8 @@ Agenturen und Anbieter rechnen KI-Mitarbeiter aktuell in drei Grundmodellen ab. 
 | Nutzungsbasiert (pro Anruf/Token/Ticket) | Abrechnung nach Volumen, z. B. pro Gespräch oder 1.000 Token | Schwankendes Volumen, Saisongeschäft | 0,03–0,12 €/1.000 Token, oder ca. 4–8 Cent pro Anruf/Nachricht |
 | Sprint-Retainer | Feste Sprints (2–4 Wochen) mit definiertem Ergebnis, danach Betriebsvertrag | Agenturen, die schnell live gehen wollen | Sprintpreis + laufende Betreuung |
 
-:::callout
-**Achtung:** Ein Angebot ohne klare Trennung zwischen Setup, laufenden API-Kosten und Wartung ist ein Warnsignal. Seriöse Anbieter legen alle drei Posten offen – sonst zahlst du versteckt für Dinge, die du nicht siehst.
+:::callout Achtung
+Ein Angebot ohne klare Trennung zwischen Setup, laufenden API-Kosten und Wartung ist ein Warnsignal. Seriöse Anbieter legen alle drei Posten offen – sonst zahlst du versteckt für Dinge, die du nicht siehst.
 :::
 
 ## Die Rechnung, die kaum jemand macht
@@ -40,8 +40,8 @@ Zahlen aus Whitepapers sind das eine – reale Umsetzungen etwas anderes. Bei Di
 
 **Beispiel 3: Onboarding.** Ein 5-Personen-Team in der Software-Beratung brachte sein Kunden-Onboarding von 2–3 Tagen auf unter 30 Minuten. Das schafft 35–50 Stunden Fokuszeit pro Monat und rund 90 % weniger Setup-Fehler, bei durchgängig konsistentem Ablauf.
 
-:::callout
-**Kernbotschaft:** In keinem dieser Fälle ging es um den günstigsten Anbieter, sondern um den größten Hebel – die Aufgabe mit dem höchsten Zeitaufwand und dem höchsten Stundensatz zuerst automatisieren.
+:::callout Kernbotschaft
+In keinem dieser Fälle ging es um den günstigsten Anbieter, sondern um den größten Hebel – die Aufgabe mit dem höchsten Zeitaufwand und dem höchsten Stundensatz zuerst automatisieren.
 :::
 
 ## Woran du eine seriöse Agentur erkennst
@@ -53,8 +53,8 @@ Nicht jeder, der "KI-Mitarbeiter" verkauft, liefert auch einen. Ein paar Prüfst
 - **Kurze erste Iteration:** ein funktionsfähiges Ergebnis innerhalb weniger Wochen, nicht erst nach einem sechsmonatigen Großprojekt. Eine M&A-Beratungsboutique etwa hatte ihr automatisiertes Nachfasssystem für Investorenkommunikation innerhalb von rund drei Wochen produktiv – nicht erst nach einem Quartal.
 - **DSGVO-Konformität von Anfang an:** Wo die Daten liegen und wie sie verarbeitet werden, muss vor Vertragsschluss klar sein, nicht erst auf Nachfrage.
 
-:::callout
-**Profi-Tipp:** Verlange vor dem Auftrag einen konkreten Pilot-Scope – eine einzelne, klar abgegrenzte Aufgabe, an der du in 2–4 Wochen siehst, ob die Zusammenarbeit funktioniert, bevor du dich auf ein größeres Paket festlegst.
+:::callout Profi-Tipp
+Verlange vor dem Auftrag einen konkreten Pilot-Scope – eine einzelne, klar abgegrenzte Aufgabe, an der du in 2–4 Wochen siehst, ob die Zusammenarbeit funktioniert, bevor du dich auf ein größeres Paket festlegst.
 :::
 
 ## Fazit

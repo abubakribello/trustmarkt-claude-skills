@@ -9,7 +9,9 @@ Source: brand guideline slides supplied directly by the client (pasted inline, n
 - **Black**: `#000000`
 - **White**: `#ffffff`
 
-Use `#1cb5e0` as the glow/accent color (badge borders, highlighted headline words, stat callouts) — this replaces the earlier generic teal placeholder (`#29D8F0`) used before the brand deck was supplied. Use the `#000046` → `#1cb5e0` diagonal gradient for backgrounds instead of a flat charcoal/black studio background, where it doesn't fight the photo subject.
+Use `#1cb5e0` as the glow/accent color (badge borders, highlighted headline words, stat callouts, rim-light) — this replaces the earlier generic teal placeholder (`#29D8F0`) used before the brand deck was supplied.
+
+**Don't default every cover to the `#000046` → `#1cb5e0` gradient as a full-canvas background wash** — direct feedback from Johannes on a real batch was "too blue." The gradient is a small-area accent (glow, diagram lines, badge border, rim-light on hair/shoulder), not the backdrop. For the actual background, use a real photographic scene or setting — a real office/studio interior, a co-working space, a city skyline, an outdoor location — lit naturally, with the cyan accent worked in as a light source or overlay glow rather than tinting the whole frame blue. Vary the scene across the 3 cover variants so there's a genuine choice, not the same gradient backdrop three times with different overlays.
 
 ## Typography
 

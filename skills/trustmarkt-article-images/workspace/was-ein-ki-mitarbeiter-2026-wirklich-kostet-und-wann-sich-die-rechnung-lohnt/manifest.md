@@ -7,9 +7,9 @@ Article ID: `p2618VqJBo0dWMl5Lgak`
 
 | File | Concept | Caption |
 |---|---|---|
-| `cover-v1.png` | Stat highlight: large glowing stat "43.200 €/Jahr" with clock/coin icons, arms crossed | Coverentwurf 1: Stat-Highlight – 43.200 Euro pro Jahr, was manuelle Arbeit wirklich kostet. |
-| `cover-v2.png` | Workflow diagram: calculator icon as hub, branching to calendar/euro/clock/checkmark icons, thoughtful pose | Coverentwurf 2: Workflow-Diagramm – die Rechnung, die sich lohnt. |
-| `cover-v3.png` | Network/hologram: 43.200 € (manual) vs. 6.000 € (AI employee) as floating data points | Coverentwurf 3: Netzwerk-Hologramm – 43.200 Euro manuell vs. 6.000 Euro KI-Mitarbeiter. |
+| `cover-v1.png` | Real home-office/studio scene (desk, lamp, window, plants), stat highlight "43.200 €/Jahr" with clock/coin icons, arms crossed | Coverentwurf 1: Büro-Szene – 43.200 Euro pro Jahr, was manuelle Arbeit wirklich kostet. |
+| `cover-v2.png` | Real co-working space with a city skyline at dusk through the windows, workflow diagram (calculator hub branching to calendar/euro/clock/checkmark icons), thoughtful pose | Coverentwurf 2: Co-Working-Space mit Skyline – die Rechnung, die sich lohnt. |
+| `cover-v3.png` | Real rooftop terrace at blue hour with city skyline and string lights, floating data-point comparison 43.200 € (manual) vs. 6.000 € (AI-Mitarbeiter) | Coverentwurf 3: Dachterrasse bei Dämmerung – 43.200 Euro manuell vs. 6.000 Euro KI-Mitarbeiter. |
 
 ## Section images (2)
 

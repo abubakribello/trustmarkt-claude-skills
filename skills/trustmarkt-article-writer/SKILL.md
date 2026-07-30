@@ -90,11 +90,11 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 - **H2s are statements, not labels:** "Warum niedrige Margen keine Option sind" beats "Vorteile". H3s for sub-points.
 - **Concrete numbers in every article.** Costs in €, percentages, time saved, prices per unit ("ca. 4,5 Cent pro Nachricht", "4.550 € pro Monat, pro Kopf"). A worked calculation ("Die Rechnung, die kaum jemand macht") is a benchmark signature. Never invent numbers — use researched, sourced, or company-provided figures.
 - **Use a GFM table** when comparing options/before-after (benchmarks do this constantly: Vertriebler vs. Voice-AI, klassisch vs. automatisiert).
-- **Use `:::callout` boxes** 1–3 times for the key takeaways, styled like the benchmarks: "Achtung", "Profi-Tipp", "Kernbotschaft", "Wichtig zu verstehen" — one short bolded lesson each.
+- **Use `:::callout` boxes** 1–3 times for the key takeaways, styled like the benchmarks: "Achtung", "Profi-Tipp", "Kernbotschaft", "Wichtig zu verstehen" — one short bolded lesson each. **The title MUST be on the same line as the opening fence**: `:::callout Kernbotschaft` then the body text on the next line(s), then `:::`. Putting the title as a bolded first line inside the body (`:::callout` / `**Kernbotschaft:** ...`) does NOT work — verified against the live API, it renders with a generic "Hinweis" title and the bold text just becomes the start of the body paragraph.
 - **Link the company's own case studies inline.** Fetch them via `list-case-studies` and weave 1–3 relevant ones in where they prove a point ("Fallstudie: ... Link: ..."). This is the platform's strongest trust pattern. Also end with one soft CTA linking the company website or profile.
 - **Practical middle:** concrete examples ("Beispiel 1: ...", real use cases), Do's/Don'ts lists, or numbered steps. The reader should be able to act without further research.
 - **Fazit section, always:** summarize the argument, then close with a concrete next step or reflective question ("Schau dir diese Woche einmal ehrlich an, wo...").
-- **Optional `:::faq` block** at the end with 3–5 real search questions and short answers — good for SEO, benchmarks use it.
+- **Do NOT use `:::faq`.** Verified against the live API: everything between `:::faq` and the closing `:::` is silently dropped from the rendered content — no error, no accordion, the text is just gone. For an FAQ close, use a plain `## Häufig gestellte Fragen` H2 with 3–5 bolded questions followed by their answer in the same paragraph — guaranteed-supported Markdown, same SEO value.
 
 ### Pre-POST checklist (run silently, fix before creating the draft)
 
@@ -115,7 +115,7 @@ Images can't go through the API and placeholder text must never appear in the dr
 
 - Title: 10–90 characters
 - Content: Markdown, max 50,000 characters
-- Supported Markdown ONLY: `##`/`###`/`####` headings, **bold**, _italic_, [links](https://example.com), lists, `---` dividers. GFM tables and `:::faq` / `:::callout` directives are accepted on update and generally render, but keep them optional
+- Supported Markdown ONLY: `##`/`###`/`####` headings, **bold**, _italic_, [links](https://example.com), lists, `---` dividers. GFM tables and `:::callout Titel` (title on the fence line — see content rules above) render correctly. `:::faq` does NOT render — its content is silently dropped; use a plain `## Häufig gestellte Fragen` section instead
 - Raw HTML is stripped server-side — never use HTML tags
 - No images via API (add them later in the web editor); mention this in your final report
 - Max 50 articles may sit in DRAFT/SUBMITTED/REJECTED at once — if creation fails with 422 mentioning the limit, list articles and tell the user which drafts to publish or delete

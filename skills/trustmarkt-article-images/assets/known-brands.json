@@ -95,6 +95,16 @@
       "fetch_name": "Zapier",
       "type": "tool",
       "fetch_domain": "zapier.com"
+    },
+    {
+      "name": "Perplexity",
+      "keywords": [
+        "perplexity"
+      ],
+      "icon": "perplexity.png",
+      "fetch_name": "Perplexity",
+      "type": "tool",
+      "fetch_domain": "perplexity.ai"
     }
   ],
   "institutional": [

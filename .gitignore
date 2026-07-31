@@ -1,0 +1,4 @@
+# Per-run output — never commit generated images/backgrounds
+skills/trustmarkt-article-images/workspace/
+__pycache__/
+*.pyc

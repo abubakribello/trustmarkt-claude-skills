@@ -41,6 +41,9 @@ Section/inline images are unaffected by this change — they still go through Ge
 - `N8N_IMAGE_WEBHOOK_URL` env var — your self-hosted n8n webhook that accepts an image/manifest and uploads it to Drive. Import `n8n/trustmarkt-article-image-upload.json` (see `n8n/README.md` for setup) and point this at its production URL.
 - `N8N_IMAGE_DRIVE_FOLDER_ID` env var — the shared parent Drive folder. Each article run creates its own subfolder inside it first and uploads everything there. Defaults to `1P0PBdVPtlloCz9ApzvguklnGgvzoTaIq` unless the user names another.
 
+**Recommended for cloud routines specifically:**
+- `GITHUB_TOKEN` env var — a token scoped to just this repo (`contents: write` is enough) so `register_brand.py` can push a newly-discovered brand's icon back to GitHub. Without it, a new brand still works for the run that discovers it, but the registration is lost when that sandbox is torn down (every routine run does a fresh shallow clone per `BOOTSTRAP.md` — nothing persists across runs unless it's pushed back). With it, every brand only ever needs discovering once, by whichever run happens to encounter it first.
+
 ## Workflow
 
 ### 1. Get the article

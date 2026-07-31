@@ -7,8 +7,19 @@ brand mark from a text description alone.
 Sources, in order:
   1. Simple Icons CDN (cdn.simpleicons.org) — thousands of tech/software
      brands in their official color, as SVG, converted to PNG here.
-  2. Google's favicon service — fallback for companies/institutions not
-     on Simple Icons (lower quality, but works for almost any domain).
+     BEST-EFFORT ONLY: needs cairosvg + the native `cairo` shared library.
+     Neither Homebrew's cairo nor a from-scratch pure-Python renderer
+     (svglib+reportlab — reportlab 3.6+ also requires a cairo binding
+     under the hood, so it doesn't actually dodge the dependency) can be
+     relied on being present in a fresh sandbox / cloud routine
+     environment. If cairo isn't importable for ANY reason, this step
+     is skipped silently and step 2 runs instead — never let a missing
+     system library crash the whole skill run.
+  2. Google's favicon service — pure stdlib (urllib only), zero native
+     dependencies, works in absolutely any Python environment with
+     outbound internet access. This is the load-bearing path a cloud
+     routine should assume it's actually getting; Simple Icons is a
+     nice-to-have upgrade when the environment happens to have cairo.
 Note: Clearbit's logo API is NOT reachable from this sandbox (DNS
 blocked) — don't rely on it.
 
@@ -21,8 +32,10 @@ Usage:
     python3 fetch_tool_icon.py --name "n8n" --out assets/tool-logos/n8n.png
     python3 fetch_tool_icon.py --name "Hetzner" --domain hetzner.com --out assets/tool-logos/hetzner.png
 
-Dependencies: pip install cairosvg pillow --break-system-packages
-  (cairosvg needs the native `cairo` library: brew install cairo / apt install libcairo2)
+Dependencies: pillow is required. cairosvg is optional — install it
+  (pip install cairosvg) plus the native cairo lib (brew install cairo /
+  apt install libcairo2) for higher-quality Simple Icons results; without
+  it, the script still works via the favicon fallback.
 """
 import argparse
 import re
@@ -82,12 +95,17 @@ def main():
     if svg_data:
         try:
             import cairosvg
-        except ImportError:
-            sys.exit("Found icon as SVG but cairosvg isn't installed: pip install cairosvg --break-system-packages")
-        out.parent.mkdir(parents=True, exist_ok=True)
-        cairosvg.svg2png(bytestring=svg_data, write_to=str(out), output_width=512, output_height=512)
-        print(f"Saved {out} (Simple Icons, official brand color)")
-        return
+            out.parent.mkdir(parents=True, exist_ok=True)
+            cairosvg.svg2png(bytestring=svg_data, write_to=str(out), output_width=512, output_height=512)
+            print(f"Saved {out} (Simple Icons, official brand color)")
+            return
+        except Exception as e:
+            # Any failure here (missing cairosvg, missing native libcairo,
+            # a bad SVG, etc.) must NOT crash the run — cairo is a
+            # best-effort upgrade, not a requirement. Fall through to the
+            # zero-dependency favicon path below instead.
+            print(f"Simple Icons found an SVG but couldn't rasterize it locally ({e.__class__.__name__}: {e}); "
+                  f"falling back to favicon fetch instead.", file=sys.stderr)
 
     domain = args.domain or f"{slug}.com"
     favicon_data = try_favicon(domain)

@@ -54,6 +54,15 @@ DOMAIN_RE = re.compile(r"\b([A-Z][A-Za-z0-9]+)\.(com|de|ai|io|app)\b")
 CAPITALIZED_WORD_RE = re.compile(r"(?<![.!?]\s)(?<!^)\b([A-ZÄÖÜ][a-zäöüß]{2,})\b")
 COMMON_ACRONYM_ALLOWLIST = {"DSGVO", "KI", "SEO", "CRM", "API", "AVV", "AI", "EU", "SCC", "ZDR", "FAQ", "CTA", "B2B", "B2C"}
 
+# Generic "this article is about AI" language — deliberately loose (word-
+# boundary "ai"/"ki" plus the spelled-out German term), used ONLY as a
+# fallback when no specific tool/brand was found at all. The point isn't
+# precision here, it's catching the common case of an AI-themed article
+# that never names a specific product (n8n, ChatGPT, ...), so Gemini isn't
+# left to invent a generic AI icon from scratch when a real one (Claude's)
+# is sitting right there.
+GENERIC_AI_RE = re.compile(r"\b(ai|ki)\b|künstliche intelligenz", re.IGNORECASE)
+
 
 def load_dictionary():
     return json.loads(DICT_PATH.read_text(encoding="utf-8"))
@@ -94,6 +103,22 @@ def extract(text, dictionary):
                 found.append({"name": entry["name"], "icon_path": str(icon_path), "type": "institutional"})
             else:
                 print(f"WARNING: institutional icon missing on disk: {icon_path}", file=sys.stderr)
+
+    # No specific tool/brand named anywhere, but the article is clearly
+    # AI-themed -> use Claude's own logo as the AI icon rather than let
+    # Gemini invent a generic one. Skipped entirely if a real tool was
+    # already found (that's always the more specific, correct choice).
+    if not any(f["type"] == "tool" for f in found) and GENERIC_AI_RE.search(text):
+        claude_entry = next((e for e in dictionary.get("brands", []) if e["name"] == "Claude"), None)
+        if claude_entry:
+            icon_path = _ensure_fetched(claude_entry, tool_logos_dir)
+            if icon_path:
+                found.append({
+                    "name": "Claude",
+                    "icon_path": icon_path,
+                    "type": "tool",
+                    "generic_ai_fallback": True,
+                })
 
     return found
 

@@ -92,21 +92,29 @@ def _icon_fragment(icon, index_word):
 
 # --- A: minimal text + portrait -------------------------------------------
 
-def build_a(photo, headline, output, person_side="right"):
-    """Plain question/identity headline, no icons. Safest template — zero
-    icon/label fidelity risk. Good as one of the 3 picks almost every time."""
+def build_a(photo, headline, output, icon, person_side="right"):
+    """Plain question/identity headline, minimal layout — the safest
+    template for text/layout fidelity risk (one icon, no orbit/scatter/
+    multi-item counting to get wrong). `icon` is required: a real logo
+    file path for a named brand/tool (use the extract_entities.py /
+    Claude generic-AI-fallback result), or a plain text description for a
+    generic concept — every cover template renders at least one relevant
+    icon, this one included."""
     text_side = "left" if person_side == "right" else "right"
+    icon_frag, icon_ref = _icon_fragment(icon, "small")
+    refs = [photo] + ([icon_ref] if icon_ref else [])
     prompt = (
-        f"{FACE_LOCK} Compose this reference image into a dramatic 16:9 dark "
+        f"{FACE_LOCK} Compose these reference images into a dramatic 16:9 dark "
         f"video-cover scene. The person pose and shirt stay as shown. Position "
         f"the person on the {person_side} side of the frame, upper body "
-        f"visible. Near-black dark background with a very subtle grid, no "
-        f"other graphics, no icons. On the {text_side} side render this exact "
-        f"headline in large bold white all-caps letters, spelled exactly, "
-        f"perfectly legible: {headline}. Photorealistic, cinematic lighting, "
-        f"no colored glow."
+        f"visible. Near-black dark background with a very subtle grid. On the "
+        f"{text_side} side render this exact headline in large bold white "
+        f"all-caps letters, spelled exactly, perfectly legible: {headline}. "
+        f"Near the headline, render {icon_frag}, small and unobtrusive, "
+        f"clearly secondary to the headline text, not overlapping any "
+        f"letters. Photorealistic, cinematic lighting, no colored glow."
     )
-    return compose(prompt, [photo], output)
+    return compose(prompt, refs, output)
 
 
 # --- B: two-icon comparison -------------------------------------------
@@ -198,36 +206,49 @@ def build_d(photo, headline, icons, output):
 
 # --- E: AI-prompt-box mockup -------------------------------------------
 
-def build_e(photo, headline, prompt_text, output, person_side="left"):
+def build_e(photo, headline, prompt_text, output, icon, person_side="left"):
     """Fake chat-input UI (PROMPT label + typed question + send button).
-    Fits content framed as 'the question you'd ask an AI advisor'."""
+    Fits content framed as 'the question you'd ask an AI advisor'. `icon`
+    is required: the real logo of the AI/tool being addressed (use the
+    Claude generic-AI-fallback result when the article names no specific
+    product) or a plain text description, rendered inside the box so the
+    mockup reads as a specific tool, not a generic chat UI."""
     text_side = "right" if person_side == "left" else "left"
+    icon_frag, icon_ref = _icon_fragment(icon, "small")
+    refs = [photo] + ([icon_ref] if icon_ref else [])
     prompt = (
-        f"{FACE_LOCK} Compose this reference image into a dramatic 16:9 dark "
+        f"{FACE_LOCK} Compose these reference images into a dramatic 16:9 dark "
         f"video-cover scene. The person pose and shirt stay as shown. Position "
         f"the person on the {person_side} side of the frame, upper body "
         f"visible. On the {text_side} side, at the top, render this exact "
         f"headline in large bold white all-caps letters, spelled exactly, "
         f"perfectly legible: {headline}. Below the headline, render a dark "
         f"rounded-rectangle chat-input UI box with a thin border: a small "
-        f"grey label reading PROMPT in the top-left of the box, and below it "
-        f"in white text the exact sentence: {prompt_text}, and a small "
-        f"glowing blue circular send button with a white right-pointing "
-        f"arrow icon inside it at the right edge of the box, fully contained "
-        f"within the box border. Near-black dark background with subtle "
-        f"grid. Photorealistic, cinematic lighting."
+        f"circular icon in the top-left corner of the box showing {icon_frag}, "
+        f"next to it a small grey label reading PROMPT, and below that in "
+        f"white text the exact sentence: {prompt_text}, and a small glowing "
+        f"blue circular send button with a white right-pointing arrow icon "
+        f"inside it at the right edge of the box, fully contained within the "
+        f"box border. Near-black dark background with subtle grid. "
+        f"Photorealistic, cinematic lighting."
     )
-    return compose(prompt, [photo], output)
+    return compose(prompt, refs, output)
 
 
 # --- F: workflow / process node-flow -------------------------------------------
 
-def build_f(photo, headline, nodes, output):
+def build_f(photo, headline, nodes, output, icon):
     """nodes: 3-5 short labels forming a left-to-right pipeline above the
-    person's head. Fits any 'step 1 -> step 2 -> ... -> done' content."""
+    person's head. Fits any 'step 1 -> step 2 -> ... -> done' content.
+    `icon` is required: a real logo or plain text description, rendered as
+    a small tile inside ONE node (whichever step the icon actually
+    represents — pick the most tool-specific step) so the pipeline isn't
+    text-only."""
     node_chain = ", then ".join(nodes)
+    icon_frag, icon_ref = _icon_fragment(icon, "small")
+    refs = [photo] + ([icon_ref] if icon_ref else [])
     prompt = (
-        f"{FACE_LOCK} Compose this reference image into a dramatic 16:9 dark "
+        f"{FACE_LOCK} Compose these reference images into a dramatic 16:9 dark "
         f"video-cover scene. The person pose and shirt stay as shown. "
         f"Position the person centered in the LOWER part of the frame only, "
         f"so the whole upper half of the frame is free of the person. Above "
@@ -236,22 +257,28 @@ def build_f(photo, headline, nodes, output):
         f"the upper half of the frame, each a small rounded rectangle with a "
         f"short label inside it, spelled exactly, legible: {node_chain} — in "
         f"that left-to-right order, connected by smooth glowing cyan cable "
-        f"lines with a small arrow at each connection. Keep this node row "
-        f"well above the person's head with clear vertical gap, not touching "
-        f"or overlapping the head or face at all. At the very top of the "
-        f"frame render this exact headline in large bold white all-caps "
-        f"letters, spelled exactly, perfectly legible: {headline}. "
-        f"Near-black dark background. Photorealistic, cinematic lighting."
+        f"lines with a small arrow at each connection. Inside the single "
+        f"most relevant node box, also render a small icon showing "
+        f"{icon_frag}, next to that node's label, sized to fit cleanly "
+        f"inside the box without crowding the text. Keep this node row well "
+        f"above the person's head with clear vertical gap, not touching or "
+        f"overlapping the head or face at all. At the very top of the frame "
+        f"render this exact headline in large bold white all-caps letters, "
+        f"spelled exactly, perfectly legible: {headline}. Near-black dark "
+        f"background. Photorealistic, cinematic lighting."
     )
-    return compose(prompt, [photo], output)
+    return compose(prompt, refs, output)
 
 
 # --- G: stat cards -------------------------------------------
 
-def build_g(photo, headline, cards, output, person_side="right"):
+def build_g(photo, headline, cards, output, icon, person_side="right"):
     """cards: list of exactly 3 (big_stat, small_label) pairs — real numbers
     beat generic icons here. Leads with proof, not theory; strong closer
-    pick alongside A (question) and C or F (method)."""
+    pick alongside A (question) and C or F (method). `icon` is required: a
+    small real logo or plain text description, rendered once as a tile
+    above the stat cards so the proof reads as tied to a specific
+    tool/topic, not just abstract numbers."""
     assert len(cards) == 3, "build_g needs exactly 3 (stat, label) cards"
     text_side = "left" if person_side == "right" else "right"
     card_desc = ". ".join(
@@ -259,24 +286,27 @@ def build_g(photo, headline, cards, output, person_side="right"):
         f"smaller text {label}"
         for i, ((stat, label), pos) in enumerate(zip(cards, ["top", "middle", "bottom"]))
     )
+    icon_frag, icon_ref = _icon_fragment(icon, "small")
+    refs = [photo] + ([icon_ref] if icon_ref else [])
     prompt = (
-        f"{FACE_LOCK} Compose this reference image into a dramatic 16:9 dark "
+        f"{FACE_LOCK} Compose these reference images into a dramatic 16:9 dark "
         f"video-cover scene. The person pose and shirt stay as shown. "
         f"Position the person on the {person_side} side of the frame, upper "
         f"body visible, not extreme close-up, leaving the {text_side} "
-        f"two-thirds of the frame clear. On the {text_side} side, render "
-        f"EXACTLY THREE small bordered dark UI stat cards (rounded "
-        f"rectangle, thin border, dark glass panel), stacked vertically, "
-        f"clearly separated, not overlapping each other or the person, no "
-        f"more than three cards: {card_desc}. All text spelled exactly as "
-        f"given, perfectly legible bold white text, the big numbers in a "
-        f"bright glowing blue accent color. Between the cards, to their "
-        f"{text_side} edge, render this exact headline in large bold white "
-        f"all-caps letters, spelled exactly, perfectly legible: {headline}. "
-        f"Near-black dark background with subtle grid. Photorealistic, "
-        f"cinematic lighting."
+        f"two-thirds of the frame clear. On the {text_side} side, above the "
+        f"stat cards, render one small icon tile showing {icon_frag}. Below "
+        f"it, render EXACTLY THREE small bordered dark UI stat cards "
+        f"(rounded rectangle, thin border, dark glass panel), stacked "
+        f"vertically, clearly separated, not overlapping each other, the "
+        f"icon, or the person, no more than three cards: {card_desc}. All "
+        f"text spelled exactly as given, perfectly legible bold white text, "
+        f"the big numbers in a bright glowing blue accent color. Between "
+        f"the icon and cards, to their {text_side} edge, render this exact "
+        f"headline in large bold white all-caps letters, spelled exactly, "
+        f"perfectly legible: {headline}. Near-black dark background with "
+        f"subtle grid. Photorealistic, cinematic lighting."
     )
-    return compose(prompt, [photo], output)
+    return compose(prompt, refs, output)
 
 
 TEMPLATES = {"A": build_a, "B": build_b, "C": build_c, "D": build_d,
@@ -287,5 +317,5 @@ if __name__ == "__main__":
     # Quick smoke test — template A with the neutral headshot.
     out = ROOT / "workspace" / "smoke-test-A.png"
     build_a(str(REAL_PHOTOS / "johannes-serious-headshot-01.png"),
-            "SMOKE TEST", str(out))
+            "SMOKE TEST", str(out), icon="a glowing dark 3D checkmark tile")
     print(f"Smoke test complete: {out}")

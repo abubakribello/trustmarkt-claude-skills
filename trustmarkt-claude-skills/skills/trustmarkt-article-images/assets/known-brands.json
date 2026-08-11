@@ -1,0 +1,127 @@
+{
+  "_comment": "Keyword -> asset mapping for extract_entities.py. 'keywords' are matched case-insensitively as substrings against the article title+content. 'icon' is the cached filename under assets/tool-logos/ (fetched via fetch_tool_icon.py if missing) or assets/institutional-logos/ for type=institutional.",
+  "brands": [
+    {
+      "name": "n8n",
+      "keywords": [
+        "n8n"
+      ],
+      "icon": "n8n.png",
+      "fetch_name": "n8n",
+      "type": "tool"
+    },
+    {
+      "name": "Make",
+      "keywords": [
+        "make.com",
+        " make "
+      ],
+      "icon": "make.png",
+      "fetch_name": "Make",
+      "fetch_domain": "make.com",
+      "type": "tool"
+    },
+    {
+      "name": "Claude",
+      "keywords": [
+        "claude"
+      ],
+      "icon": "claude.png",
+      "fetch_name": "Claude",
+      "fetch_domain": "claude.ai",
+      "type": "tool"
+    },
+    {
+      "name": "ChatGPT",
+      "keywords": [
+        "chatgpt",
+        "openai"
+      ],
+      "icon": "openai.png",
+      "fetch_name": "OpenAI",
+      "type": "tool"
+    },
+    {
+      "name": "WhatsApp",
+      "keywords": [
+        "whatsapp"
+      ],
+      "icon": "whatsapp.png",
+      "fetch_name": "WhatsApp",
+      "type": "tool"
+    },
+    {
+      "name": "Meta",
+      "keywords": [
+        " meta "
+      ],
+      "icon": "meta.png",
+      "fetch_name": "Meta",
+      "type": "tool"
+    },
+    {
+      "name": "Hetzner",
+      "keywords": [
+        "hetzner"
+      ],
+      "icon": "hetzner.png",
+      "fetch_name": "Hetzner",
+      "type": "tool"
+    },
+    {
+      "name": "Cursor",
+      "keywords": [
+        "cursor"
+      ],
+      "icon": "cursor.png",
+      "fetch_name": "Cursor",
+      "type": "tool"
+    },
+    {
+      "name": "Lovable",
+      "keywords": [
+        "lovable"
+      ],
+      "icon": "lovable.png",
+      "fetch_name": "Lovable",
+      "type": "tool"
+    },
+    {
+      "name": "Zapier",
+      "keywords": [
+        "zapier"
+      ],
+      "icon": "zapier.png",
+      "fetch_name": "Zapier",
+      "type": "tool",
+      "fetch_domain": "zapier.com"
+    },
+    {
+      "name": "Perplexity",
+      "keywords": [
+        "perplexity"
+      ],
+      "icon": "perplexity.png",
+      "fetch_name": "Perplexity",
+      "type": "tool",
+      "fetch_domain": "perplexity.ai"
+    }
+  ],
+  "institutional": [
+    {
+      "name": "EU/DSGVO",
+      "keywords": [
+        "dsgvo",
+        "ds-gvo",
+        "gdpr",
+        "datenschutz-grundverordnung",
+        "eu ai act",
+        "ki-verordnung",
+        "europäische union",
+        "eu-recht"
+      ],
+      "icon": "eu-flag.png",
+      "type": "institutional"
+    }
+  ]
+}

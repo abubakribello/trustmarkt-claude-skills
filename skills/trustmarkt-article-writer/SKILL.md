@@ -92,6 +92,7 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 - **Use a GFM table** when comparing options/before-after (benchmarks do this constantly: Vertriebler vs. Voice-AI, klassisch vs. automatisiert).
 - **Use `:::callout <Titel>` boxes** 1–3 times for the key takeaways, styled like the benchmarks: "Achtung", "Profi-Tipp", "Kernbotschaft", "Wichtig zu verstehen". **The title goes on the opening directive line itself** (`:::callout Achtung`), not as bold text in the body — the renderer puts the directive-line text into a dedicated title slot; a bare `:::callout` with no title silently falls back to a generic "Hinweis" label and dumps a stray `{title="..."}`-style string into the body if you try attribute syntax instead. Body text follows on the next line(s), plain (no leading `**Titel:**`).
 - **Link the company's own case studies inline.** Fetch them via `list-case-studies` and weave 1–3 relevant ones in where they prove a point ("Fallstudie: ... Link: ..."). This is the platform's strongest trust pattern. Also end with one soft CTA linking the company website or profile.
+- **Never link the same URL twice in one article.** Every `[text](url)` must point somewhere different from every other link in the piece — including between inline case-study links and the closing CTA (don't let the CTA silently repeat a URL already used inline; pick a different case study/page, or drop the CTA link and just name the company). `trustmarkt_api.py`'s `validate_article` now rejects a draft with a repeated link URL before it's sent, but fix this while drafting rather than relying on that to catch it.
 - **Practical middle:** concrete examples ("Beispiel 1: ...", real use cases), Do's/Don'ts lists, or numbered steps. The reader should be able to act without further research.
 - **Fazit section, always:** summarize the argument, then close with a concrete next step or reflective question ("Schau dir diese Woche einmal ehrlich an, wo...").
 - **Optional `:::faq` block** at the end with 3–5 real search questions and short answers — good for SEO, benchmarks use it.
@@ -106,6 +107,7 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 6. Title 10–90 chars, no H1 in body, only supported Markdown, no images/HTML
 7. Fazit with a concrete next step
 8. **≥2 paragraphs before the first `##` heading** — Trustmarkt's editor flags this specifically ("Introduction: There must be at least two paragraphs before the first heading"); a single merged paragraph fails validation even if everything else is fine
+9. **No link URL used twice** — every `[text](url)` in the article points to a different URL from every other one; `create-article`/`update-article` now hard-reject a repeated link URL
 
 ### Image plan (report, not article body)
 
@@ -118,6 +120,7 @@ Images can't go through the API and placeholder text must never appear in the dr
 - Supported Markdown ONLY: `##`/`###`/`####` headings, **bold**, _italic_, [links](https://example.com), lists, `---` dividers. GFM tables and `:::faq` / `:::callout` directives are accepted on update and generally render, but keep them optional
 - Raw HTML is stripped server-side — never use HTML tags
 - No images via API (add them later in the web editor); mention this in your final report
+- No link URL may appear more than once in the article (checked client-side by the script, not the API itself)
 - Max 50 articles may sit in DRAFT/SUBMITTED/REJECTED at once — if creation fails with 422 mentioning the limit, list articles and tell the user which drafts to publish or delete
 
 ### Example title/structure

@@ -51,10 +51,17 @@ def main():
             sys.exit(f"Not a readable image: {ref} ({e})")
 
     style_suffix = (
-        "\n\nStyle requirements: clean professional B2B editorial illustration for a German "
-        "business magazine article. Any text in the image must be in correct German, short "
-        "(max 6 words), large and legible. Consistent modern palette, generous negative space, "
-        "no watermarks, no stock-photo look, no clip-art."
+        "\n\nStyle requirements: this should look like a real human graphic designer made it in "
+        "Figma for a German B2B business magazine — not an AI-generated image. Avoid every common "
+        "AI-image tell: no glowing rim light or gradient-mesh glow, no generic 3D-render or "
+        "glossy-plastic look, no meaningless decorative particles/sparkles/bokeh, no melted or "
+        "overly symmetrical icon shapes, no stock-photo or clip-art feel. Instead: flat or subtly "
+        "shaded vector iconography with consistent stroke widths, a restrained 2-3 color palette "
+        "(one accent color, the rest neutral dark/light), elements aligned to a clean underlying "
+        "grid, deliberate asymmetry and generous negative space rather than centered symmetry, "
+        "and sharp, intentional edges — the kind of small imperfection and restraint a human "
+        "designer applies, not machine-perfect polish. Any text in the image must be in correct "
+        "German, short (max 6 words), large and legible. No watermarks."
     )
     contents.append(args.prompt + style_suffix)
 

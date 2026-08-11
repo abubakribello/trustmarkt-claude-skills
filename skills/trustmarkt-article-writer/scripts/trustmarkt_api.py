@@ -19,6 +19,7 @@ Commands:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -26,6 +27,8 @@ import urllib.parse
 import urllib.request
 
 BASE = os.environ.get("TRUSTMARKT_API_BASE", "https://api.trustmarkt.de/v1")
+
+MD_LINK_RE = re.compile(r"\[[^\]]+\]\((https?://[^\s)]+)\)")
 
 
 def request(method, path, token, params=None, body=None, retry_429=True):
@@ -64,13 +67,20 @@ def validate_article(title, content):
         if len(content) > 50000:
             errors.append(f"content max 50000 chars (got {len(content)})")
         if "<" in content and ">" in content:
-            import re
             if re.search(r"<[a-zA-Z][^>]*>", content):
                 errors.append("content appears to contain HTML tags - they will be stripped; use Markdown only")
         if content.lstrip().startswith("# "):
             errors.append("content starts with an H1 - the title is the H1; start with intro text and use ## sections")
         if "![" in content:
             errors.append("images are not supported via API - remove image Markdown, add images in the web editor")
+        link_urls = MD_LINK_RE.findall(content)
+        counts = {}
+        for u in link_urls:
+            counts[u] = counts.get(u, 0) + 1
+        dupes = [u for u, c in counts.items() if c > 1]
+        if dupes:
+            details = ", ".join(f"{u} (used {counts[u]}x)" for u in dupes)
+            errors.append(f"the same link URL is used more than once: {details} - each link in the article must point to a different URL")
     if errors:
         sys.exit("Validation failed:\n- " + "\n- ".join(errors))
 

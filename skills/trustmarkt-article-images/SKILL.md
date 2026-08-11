@@ -29,15 +29,17 @@ Text, icon counts, and logo colors are still a real per-call risk (Gemini can mi
 
 | # | Template | Function (`compose_cover.py`) | Fits content that... |
 |---|---|---|---|
-| A | Minimal text + portrait | `build_a(photo, headline, output)` | Is a plain question/identity headline — no natural icon. Safest pick, zero fidelity risk. |
+| A | Minimal text + portrait | `build_a(photo, headline, output, icon)` | Is a plain question/identity headline. Simplest layout — one small icon, no orbit/scatter/multi-item counting risk. |
 | B | Two-icon comparison | `build_b(photo, headline, left_icon, left_label, right_icon, right_label, output)` | Weighs two things against each other (time vs money, tool A vs tool B). |
 | C | Labeled icon orbit | `build_c(photo, headline, items, output)` — `items` = exactly 4 `(icon, label)` pairs | Is a scoring framework / checklist / 4-factor breakdown. |
 | D | Icon halo (scattered) | `build_d(photo, headline, icons, output)` — `icons` = 3-4 items, no labels | Is "what's at stake" / an ecosystem/ingredients framing. |
-| E | AI-prompt-box mockup | `build_e(photo, headline, prompt_text, output)` | Frames the content as "the question you'd ask an AI advisor." |
-| F | Workflow / process flow | `build_f(photo, headline, nodes, output)` — `nodes` = 3-5 short labels | Is any step-1-to-step-N process or pipeline. |
-| G | Stat cards | `build_g(photo, headline, cards, output)` — `cards` = exactly 3 `(stat, label)` pairs | Has 3 concrete real numbers/case studies. Leads with proof, not theory. |
+| E | AI-prompt-box mockup | `build_e(photo, headline, prompt_text, output, icon)` | Frames the content as "the question you'd ask an AI advisor." |
+| F | Workflow / process flow | `build_f(photo, headline, nodes, output, icon)` — `nodes` = 3-5 short labels | Is any step-1-to-step-N process or pipeline. |
+| G | Stat cards | `build_g(photo, headline, cards, output, icon)` — `cards` = exactly 3 `(stat, label)` pairs | Has 3 concrete real numbers/case studies. Leads with proof, not theory. |
 
-For B/C/D, each `icon` is either a **real logo file path** from `assets/tool-logos/` (exact color/shape preserved, passed as a reference image — use for actual named brands) or a **plain text description** (Gemini invents an original icon — safe for generic concepts like "a stack of gold euro coins," since there's no real logo to get wrong).
+**Every template renders at least one relevant icon now — there is no icon-less variant.** For B/C/D that's inherent to the template (multiple icons). For A/E/F/G, `icon` is a required argument: A places one small icon near the headline, E places it inside the prompt-box mockup, F places it inside whichever single node it actually represents, G places it once above the stat cards.
+
+Each `icon` (all templates) is either a **real logo file path** from `assets/tool-logos/` (exact color/shape preserved, passed as a reference image — use for actual named brands) or a **plain text description** (Gemini invents an original icon — safe for generic concepts like "a stack of gold euro coins," since there's no real logo to get wrong). **If the article is AI-themed but never names a specific product**, `extract_entities.py`'s `found` list will contain a `"generic_ai_fallback": true` Claude entry (see step 2 below) — use that logo as the icon rather than a text description, so the "AI" concept has a real, recognizable mark instead of an invented one.
 
 **Picking 3 of 7 per cover set** is a judgment call, not a lookup — same spirit as headline-writing below. A pattern that's worked well twice so far: one **A** (question/identity, the safe always-works anchor), one **mechanism** template (**C** or **F** — the actual method/framework/process the article delivers), one **proof** template (**G** — real numbers/case studies, if the article has them). Don't force B, D, or E where the content doesn't naturally fit one of them — a forced metaphor reads worse than a plain A.
 
@@ -48,7 +50,7 @@ For B/C/D, each `icon` is either a **real logo file path** from `assets/tool-log
 Johannes reviewed a batch of thumbnails across all three thumbnail skills — this one, `youtube-thumbnails-merged`, and `instagram-shorts-thumbnails` (all three share the same `composite_person.py`/`render_background.py`/`render_text.py` lineage). What's now baked in or confirmed:
 
 - **Yellow/orange glow bug — fixed.** Every render was picking up an unwanted warm yellow-orange rim glow no matter what the concept called for. Root cause: `glow_color=(255, 205, 110)` was hardcoded as the *default* in `render_background.py`, `composite_person.py`, and `render_text.py`, and nothing ever overrode it. Fixed to a cool blue `(80, 150, 255)` in all three, plus the skin-tone warmth shift in `composite_person.py` step 4 flipped from warm to cool to match. If a cover ever looks yellow again, check those three files' defaults first.
-- **Icons: real and recognizable only, big or none.** This skill already only uses real fetched logos (never AI-drawn), which is correct — keep it that way. Additionally: a viewer should recognize the tool at a glance, so cap at 2 per cover as already documented, and if an article genuinely doesn't name a relevant tool, `network_hologram`'s icon-less fallback is a better choice than forcing a weak one in.
+- **Icons: real and recognizable only, big or none.** This skill already only uses real fetched logos (never AI-drawn), which is correct — keep it that way. Additionally: a viewer should recognize the tool at a glance, so cap at 2 per cover as already documented. (This note originally continued with "...an icon-less fallback is a better choice than forcing a weak one in" — that no longer applies: every current template requires at least one icon, real or Gemini-invented concept icon, see "The 7 templates" above and the generic-AI-fallback in step 2 below.)
 - **Version control.** The `cover-v<N>.png` numbering in the workflow already supports this — keep using it, and additionally copy the reviewer-picked cover into a dated `approved/` subfolder before generating further variants, so a later iteration can never overwrite the one that already got picked.
 - **Don't assume the same template works across YouTube / Instagram-Shorts / article covers** — they have real structural differences (e.g. this skill's own left/right person-side conventions differ from the other two). Get one format to a genuinely good state first, then deliberately adapt elements to the others, rather than porting a template wholesale.
 - **Text must stay legible — enforced now.** `render_text.py`'s auto-fit floor was raised from 20px to 40px and now prints a warning if a headline is long enough to hit it; if you see that warning, shorten the headline rather than trust the shrink.
@@ -71,12 +73,14 @@ Johannes reviewed a batch of thumbnails across all three thumbnail skills — th
 
 Either the draft `.md` from the article-writer skill (same session), or fetch it: `python ../trustmarkt-article-writer/scripts/trustmarkt_api.py get-article --id <ID> --expand content`.
 
-### 2. Which brands does the article name? (still needed — for real logo references in B/C/D templates)
+### 2. Which brands does the article name? (needed for every cover template now — see step 3)
 
 ```bash
 python scripts/extract_entities.py --title "<article title>" --content-file draft.md
-# -> JSON {"found": [{name, icon_path, type}, ...], "unlisted_candidates": [...]}
+# -> JSON {"found": [{name, icon_path, type, [generic_ai_fallback]}, ...], "unlisted_candidates": [...]}
 ```
+
+**If no real brand/tool was found at all and the article is AI-themed** (mentions "AI"/"KI"/"künstliche Intelligenz" without ever naming a specific product), `found` will contain one extra entry: `{"name": "Claude", "icon_path": "assets/tool-logos/claude.png", "type": "tool", "generic_ai_fallback": true}`. Use that as the `icon` for whichever template you're building instead of a plain-text "AI" description — a real, recognizable logo beats an invented generic one. This fallback is skipped automatically the moment any real tool is found, since a specific brand is always the better, more relevant pick.
 
 **`known-brands.json` is a self-growing cache, not a list you're expected to hand-maintain** — this skill gets packaged and distributed, so nobody downstream will remember to manually edit a JSON file when a new tool comes up. `unlisted_candidates` (a regex heuristic) is a supplementary hint only. **The reliable mechanism is this required step:**
 
@@ -96,7 +100,8 @@ Pick 3 of the 7 templates per the guidance above (question/identity + mechanism 
 
 1. **Pick a real photo** from `assets/headshots/real-photos/` matching the cover's tone — filenames are the interface (`serious`, `smiling`, `excited-presenting`, `mindblown`, etc.). Never use an AI-regenerated pose.
 2. **Write the headline yourself** (and any icon labels/stat-card text) — the one step that genuinely needs understanding, not a lookup. Distill the article's real hook/number/argument into ALL-CAPS German, exact spelling, don't invent a stat that isn't in the article.
-3. **Call the matching `build_*` function** from `scripts/compose_cover.py`:
+3. **Pick the icon(s)** every template needs: an `icon_path` from step 2's `found` list (including the `generic_ai_fallback` Claude entry, if that's what's present) wherever the concept names a real brand or is AI-themed with no specific product, otherwise a plain text description of the concept.
+4. **Call the matching `build_*` function** from `scripts/compose_cover.py`:
 
 ```bash
 python3 -c "
@@ -105,13 +110,14 @@ build_a(
     'assets/headshots/real-photos/johannes-serious-headshot-01.png',
     'SELBST BAUEN ODER AGENTUR?',
     'workspace/<slug>/cover-v1.png',
+    icon='assets/tool-logos/claude.png',
 )
 "
 ```
 
-(swap `build_a` and its args for whichever of the 7 templates fits — see the table above for each function's signature; for B/C/D pass an `icon_path` from step 2's `found` list wherever the concept names a real brand, otherwise a plain text description).
+(swap `build_a` and its args for whichever of the 7 templates fits — see the table above for each function's signature; `icon` is required on A/E/F/G, B/C/D take their icons as part of `left_icon`/`right_icon`/`items`/`icons`).
 
-4. **View the result with the Read tool immediately.** Check: spelling of every piece of text, icon colors match the real brand (if a real logo was referenced), correct item count (no invented extra card/icon), nothing overlapping the face or headline. If something's off, retry with a tighter constraint in the prompt (edit the relevant `build_*` function's prompt string, or just call `compose()` directly with a hand-written prompt for a one-off fix) rather than shipping a flawed result.
+5. **View the result with the Read tool immediately.** Check: spelling of every piece of text, icon colors match the real brand (if a real logo was referenced), correct item count (no invented extra card/icon), nothing overlapping the face or headline. If something's off, retry with a tighter constraint in the prompt (edit the relevant `build_*` function's prompt string, or just call `compose()` directly with a hand-written prompt for a one-off fix) rather than shipping a flawed result.
 
 ### 4. Generate the 3 section images — a different job, no person, unchanged from before
 
@@ -131,6 +137,7 @@ python scripts/generate_article_image.py \
 - Real tool icons (fetched via `fetch_tool_icon.py`, same dictionary as covers) where the section is specifically about those tools
 - **No person, no headline badge, ever.** Skip any section that would just re-render a table/comparison the article already shows as text.
 - Loosely keep the brand feel (Montserrat, `#1cb5e0` accent) so the set reads as one family, but the background doesn't need to match the covers' dark style exactly — a comparison table on a lighter neutral background is fine and often clearer.
+- **Should read as human-made, not AI-generated.** `generate_article_image.py` now appends a style suffix pushing away from common AI-image tells (glow/gradient-mesh, glossy-3D, decorative sparkles/particles, melted or too-symmetrical icons) toward real editorial-design conventions (flat vector icons, restrained 2-3 color palette, grid alignment, deliberate asymmetry/negative space) — this applies automatically, no extra flag needed. Still worth a deliberate glance on every result: if it reads as "AI slop" at a glance, regenerate with a tighter prompt (e.g. spell out "flat vector, no glow" for that specific image) rather than shipping it.
 - **View every generated section image with the Read tool. Regenerate anything with garbled/broken German text, wrong logos, or visual clutter — max 2 retries each, then flag it and skip pushing it.**
 
 ### 5. Verify, then push

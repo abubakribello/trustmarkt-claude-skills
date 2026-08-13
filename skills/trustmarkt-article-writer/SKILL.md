@@ -113,6 +113,8 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 
 Images can't go through the API and placeholder text must never appear in the draft. Instead, include an image plan in your final report: 2–4 suggested image spots (after which H2, what the image should show, a German caption suggestion each). Benchmarks average one image per 2–3 sections, usually screenshots of real systems or captioned graphics.
 
+**Two Trustmarkt editor rules constrain the plan** (the editor validates both on insert): every image needs a **valid caption** — always give each spot a real German caption suggestion, never leave one blank — and there must be **at least three text paragraphs between any two images** (the cover counts as the first image). So space the suggested spots across H2 sections that carry three-plus paragraphs each; don't propose two images with only a heading or a single paragraph between them. This is the same rule the `trustmarkt-article-images` skill plans around — keeping the article's structure image-friendly (H2 sections of three-plus paragraphs where an image should land) makes that step clean.
+
 ### Hard API constraints (validated by the script)
 
 - Title: 10–90 characters

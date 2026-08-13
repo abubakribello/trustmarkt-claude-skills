@@ -121,6 +121,8 @@ build_a(
 
 ### 4. Generate the 3 section images — a different job, no person, unchanged from before
 
+**Trustmarkt editor image rules — placement is validated, plan around it:** every image needs a **valid caption** (a non-empty, meaningful German Bildunterschrift — never blank, never a placeholder), and there must be **at least three text paragraphs between any two images**. The cover counts as the article's first image, so the first section image needs three paragraphs of body text after the intro/cover before it, and each subsequent section image needs three more paragraphs after the previous one. In practice: don't place a section image right after another with only a heading or a single paragraph between them — space them across H2 sections that actually carry three-plus paragraphs, and drop an image rather than crowd two together. This is why the default is ~3 section images across a 1,000–1,600-word article, not one per H2.
+
 Section images illustrate whatever that specific part of the article is explaining — they are **not** smaller covers, they don't use `compose_cover.py`, and they never feature Johannes:
 
 ```bash
@@ -158,7 +160,7 @@ Nothing gets uploaded before it's checked — the webhook only ever receives ima
      --image-type cover --order 1 \
      --caption "<German caption>" --folder-id "<FOLDER_ID from step 5.2>"
    ```
-   Section images: `--image-type section --order N --insert-after-h2 "<the heading text it follows>"`.
+   Section images: `--image-type section --order N --insert-after-h2 "<the heading text it follows>"`. **`--caption` is mandatory and must be a real German caption** — Trustmarkt's editor rejects an image without a valid caption, so never push with a blank or placeholder one. Confirm the chosen `--insert-after-h2` anchors leave ≥3 text paragraphs between consecutive images (see the placement rule in step 4) before pushing.
 4. Build `manifest.md` (filename → insert after which H2 → German caption → one-line concept description for covers) and push it into the same subfolder:
    ```bash
    python scripts/upload_to_n8n.py --webhook-url "$N8N_IMAGE_WEBHOOK_URL" \

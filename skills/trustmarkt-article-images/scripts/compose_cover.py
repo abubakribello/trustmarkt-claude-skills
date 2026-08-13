@@ -90,29 +90,60 @@ def _icon_fragment(icon, index_word):
     return f"an original glowing dark 3D icon tile of {icon}", None
 
 
-# --- A: minimal text + portrait -------------------------------------------
+# --- A: relevant logo(s) above the text + portrait ------------------------
 
-def build_a(photo, headline, output, icon, person_side="right"):
+_ORDINALS = ("first", "second", "third", "fourth", "fifth", "sixth")
+
+
+def build_a(photo, headline, output, icons, person_side="right"):
     """Plain question/identity headline, minimal layout — the safest
-    template for text/layout fidelity risk (one icon, no orbit/scatter/
-    multi-item counting to get wrong). `icon` is required: a real logo
-    file path for a named brand/tool (use the extract_entities.py /
-    Claude generic-AI-fallback result), or a plain text description for a
-    generic concept — every cover template renders at least one relevant
-    icon, this one included."""
+    template for text/layout fidelity risk (no orbit/scatter framework to
+    get wrong). `icons` is the article's prominent content brand(s):
+    accepts a single logo or a list of them, rendered as a row ABOVE the
+    headline, each lifted off the dark background by a SLIGHT halo (the
+    logos themselves keep their exact colors — the halo is around them,
+    not a recolor). Pass however many brands the article prominently
+    features — one for a single-tool piece, two when it pairs a product
+    with an institution (e.g. ChatGPT + EU flag), etc. Each entry is a
+    real logo file path for a named brand/tool (use the
+    extract_entities.py / Claude generic-AI-fallback result) or a plain
+    text description for a generic concept."""
+    if isinstance(icons, (str, Path)):
+        icons = [icons]
     text_side = "left" if person_side == "right" else "right"
-    icon_frag, icon_ref = _icon_fragment(icon, "small")
-    refs = [photo] + ([icon_ref] if icon_ref else [])
+
+    refs = [photo]
+    logo_frags = []
+    for idx, icon in enumerate(icons):
+        word = _ORDINALS[idx] if idx < len(_ORDINALS) else f"#{idx + 1}"
+        if isinstance(icon, (str, Path)) and Path(icon).exists():
+            logo_frags.append(
+                f"the {word} logo shown in its reference image, reproduced in "
+                f"its exact shape and colors — do not redesign or recolor it, "
+                f"only add a slight soft halo around it"
+            )
+            refs.append(Path(icon))
+        else:
+            logo_frags.append(
+                f"an original clean flat icon of {icon} with a slight soft halo"
+            )
+    logo_row = "; ".join(logo_frags)
+
     prompt = (
         f"{FACE_LOCK} Compose these reference images into a dramatic 16:9 dark "
         f"video-cover scene. The person pose and shirt stay as shown. Position "
         f"the person on the {person_side} side of the frame, upper body "
-        f"visible. Near-black dark background with a very subtle grid. On the "
-        f"{text_side} side render this exact headline in large bold white "
-        f"all-caps letters, spelled exactly, perfectly legible: {headline}. "
-        f"Near the headline, render {icon_frag}, small and unobtrusive, "
-        f"clearly secondary to the headline text, not overlapping any "
-        f"letters. Photorealistic, cinematic lighting, no colored glow."
+        f"visible, leaving the {text_side} area clear. Near-black dark "
+        f"background with a very subtle grid — the overall thumbnail stays "
+        f"dark and moody. On the {text_side} side, render a row of logos ABOVE "
+        f"the headline: {logo_row}. These logos are the only brightly lit "
+        f"elements — give each a slight, clean halo so it lifts off the dark "
+        f"background, while the background and person stay dark; the halo goes "
+        f"around each logo and must never change the logo's own colors. Below "
+        f"the logo row, render this exact headline in large bold white all-caps "
+        f"letters, spelled exactly, perfectly legible: {headline}. Keep the "
+        f"logos clearly separate from the headline letters, not overlapping "
+        f"them. Photorealistic, cinematic rim lighting on the person."
     )
     return compose(prompt, refs, output)
 

@@ -1,0 +1,9 @@
+# Generated image-skill artifacts (renders, manifests, working files)
+skills/trustmarkt-article-images/workspace/
+
+# Python bytecode caches
+__pycache__/
+*.pyc
+
+# Local article drafts produced at runtime
+skills/trustmarkt-article-writer/draft-*.md

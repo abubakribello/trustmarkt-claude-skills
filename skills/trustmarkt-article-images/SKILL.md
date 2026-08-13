@@ -29,7 +29,7 @@ Text, icon counts, and logo colors are still a real per-call risk (Gemini can mi
 
 | # | Template | Function (`compose_cover.py`) | Fits content that... |
 |---|---|---|---|
-| A | Minimal text + portrait | `build_a(photo, headline, output, icon)` | Is a plain question/identity headline. Simplest layout — one small icon, no orbit/scatter/multi-item counting risk. |
+| A | Logo(s) above the headline + portrait | `build_a(photo, headline, output, icons)` — `icons` = one logo or a list | Is a plain question/identity headline. Simplest layout — no orbit/scatter framework to get wrong. Carries the article's prominent content brand(s) as a slightly haloed row above the text (one for a single-tool piece, two when it pairs a product with an institution like ChatGPT + EU flag). |
 | B | Two-icon comparison | `build_b(photo, headline, left_icon, left_label, right_icon, right_label, output)` | Weighs two things against each other (time vs money, tool A vs tool B). |
 | C | Labeled icon orbit | `build_c(photo, headline, items, output)` — `items` = exactly 4 `(icon, label)` pairs | Is a scoring framework / checklist / 4-factor breakdown. |
 | D | Icon halo (scattered) | `build_d(photo, headline, icons, output)` — `icons` = 3-4 items, no labels | Is "what's at stake" / an ecosystem/ingredients framing. |
@@ -37,7 +37,7 @@ Text, icon counts, and logo colors are still a real per-call risk (Gemini can mi
 | F | Workflow / process flow | `build_f(photo, headline, nodes, output, icon)` — `nodes` = 3-5 short labels | Is any step-1-to-step-N process or pipeline. |
 | G | Stat cards | `build_g(photo, headline, cards, output, icon)` — `cards` = exactly 3 `(stat, label)` pairs | Has 3 concrete real numbers/case studies. Leads with proof, not theory. |
 
-**Every template renders at least one relevant icon now — there is no icon-less variant.** For B/C/D that's inherent to the template (multiple icons). For A/E/F/G, `icon` is a required argument: A places one small icon near the headline, E places it inside the prompt-box mockup, F places it inside whichever single node it actually represents, G places it once above the stat cards.
+**Every template renders at least one relevant icon now — there is no icon-less variant.** For B/C/D that's inherent to the template (multiple icons). For A/E/F/G, the icon argument is required: A renders the article's prominent content brand(s) — one or several, whatever the piece actually features — as a slightly haloed logo row above the headline (don't force a fixed count; put the logos the content is about), E places it inside the prompt-box mockup, F places it inside whichever single node it actually represents, G places it once above the stat cards. On A, each logo gets a slight halo so it lifts off the dark background, but the halo goes *around* the logo — it must never recolor the mark itself (a "bright glow" over "preserve exact colors" is what tints a logo the wrong color).
 
 Each `icon` (all templates) is either a **real logo file path** from `assets/tool-logos/` (exact color/shape preserved, passed as a reference image — use for actual named brands) or a **plain text description** (Gemini invents an original icon — safe for generic concepts like "a stack of gold euro coins," since there's no real logo to get wrong). **If the article is AI-themed but never names a specific product**, `extract_entities.py`'s `found` list will contain a `"generic_ai_fallback": true` Claude entry (see step 2 below) — use that logo as the icon rather than a text description, so the "AI" concept has a real, recognizable mark instead of an invented one.
 
@@ -108,14 +108,14 @@ python3 -c "
 from scripts.compose_cover import build_a
 build_a(
     'assets/headshots/real-photos/johannes-serious-headshot-01.png',
-    'SELBST BAUEN ODER AGENTUR?',
+    'IST CHATGPT DSGVO-KONFORM?',
     'workspace/<slug>/cover-v1.png',
-    icon='assets/tool-logos/claude.png',
+    icons=['assets/tool-logos/openai.png', 'assets/institutional-logos/eu-flag.png'],
 )
 "
 ```
 
-(swap `build_a` and its args for whichever of the 7 templates fits — see the table above for each function's signature; `icon` is required on A/E/F/G, B/C/D take their icons as part of `left_icon`/`right_icon`/`items`/`icons`).
+(`icons` takes one logo or a list — pass the article's prominent content brand(s); a single-tool piece passes one, a piece pairing a product with an institution passes both. Swap `build_a` and its args for whichever of the 7 templates fits — see the table above for each function's signature; the icon argument is required on A/E/F/G, B/C/D take their icons as part of `left_icon`/`right_icon`/`items`/`icons`.)
 
 5. **View the result with the Read tool immediately.** Check: spelling of every piece of text, icon colors match the real brand (if a real logo was referenced), correct item count (no invented extra card/icon), nothing overlapping the face or headline. If something's off, retry with a tighter constraint in the prompt (edit the relevant `build_*` function's prompt string, or just call `compose()` directly with a hand-written prompt for a one-off fix) rather than shipping a flawed result.
 

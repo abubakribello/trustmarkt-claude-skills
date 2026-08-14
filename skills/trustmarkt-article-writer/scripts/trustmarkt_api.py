@@ -59,6 +59,36 @@ def request(method, path, token, params=None, body=None, retry_429=True):
         sys.exit(f"Network error: {e.reason}")
 
 
+def check_directive_fences(content):
+    """Container directives (:::callout, :::faq, ...) must be closed with a bare
+    ':::' line. An unclosed block is NOT rejected by the API - it silently ships
+    and renders as literal ':::callout ...' text instead of a styled box, which
+    is only visible after the article is rendered. Catch it here instead.
+
+    Convention (remark-directive): a line whose stripped form is ':::<name>...'
+    opens a block; a line that is exactly ':::' closes the innermost open block.
+    """
+    errors = []
+    open_stack = []  # (line_number, directive_line)
+    for lineno, line in enumerate(content.splitlines(), 1):
+        s = line.strip()
+        if s == ":::":
+            if open_stack:
+                open_stack.pop()
+            else:
+                errors.append(f"line {lineno}: a closing ':::' has no matching open directive above it")
+        elif s.startswith(":::") and len(s) > 3:
+            open_stack.append((lineno, s))
+    for lineno, directive in open_stack:
+        name = directive[3:].split()[0] if len(directive) > 3 else ""
+        errors.append(
+            f"line {lineno}: directive '{directive}' is never closed - add a line "
+            f"containing only ':::' after its body (an unclosed :::{name} renders "
+            f"as literal text, not a styled block)"
+        )
+    return errors
+
+
 def validate_article(title, content):
     errors = []
     if title is not None and not (10 <= len(title) <= 90):
@@ -81,6 +111,7 @@ def validate_article(title, content):
         if dupes:
             details = ", ".join(f"{u} (used {counts[u]}x)" for u in dupes)
             errors.append(f"the same link URL is used more than once: {details} - each link in the article must point to a different URL")
+        errors.extend(check_directive_fences(content))
     if errors:
         sys.exit("Validation failed:\n- " + "\n- ".join(errors))
 

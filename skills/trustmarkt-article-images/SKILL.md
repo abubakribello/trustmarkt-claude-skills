@@ -25,6 +25,8 @@ Never upload through a Drive MCP/connector tool directly — passing full-resolu
 
 Text, icon counts, and logo colors are still a real per-call risk (Gemini can misspell, invent an extra card, or recolor a logo) — **always view every generated image with the Read tool and check spelling/counts/colors before delivering.** Retry with a more explicit constraint if something's off (`build_g`'s "EXACTLY THREE... no more" wording is the fix for a real duplicate-card bug hit during development — same pattern applies to any count/spelling miss).
 
+**Watch specifically for "whitewashed" logos on marks whose color lives in a background tile, not the glyph.** The Claude logo is a *white* starburst on a *coral* rounded-square tile — its brand color is entirely in the tile. On templates that drop a "bare" logo onto the dark scene (A, and F/E via `_icon_fragment`), Gemini used to extract just the white glyph and set it on the near-black background with a halo, producing a white-on-dark mark that lost the coral (a real bug hit on this article's covers — see git history). "Keep the logo's own colors" reads as satisfied because the glyph genuinely *is* white, so this slips past a casual check. The prompts now explicitly demand the *complete* logo including its colored tile and a faint drop-shadow instead of a halo — but still verify it at delivery: **a Claude mark rendered white-on-dark with no coral tile = fail → regenerate.** `build_g` never had this problem because it renders the icon as a full app-tile.
+
 ### The 7 templates
 
 | # | Template | Function (`compose_cover.py`) | Fits content that... |
@@ -117,7 +119,7 @@ build_a(
 
 (`icons` takes one logo or a list — pass the article's prominent content brand(s); a single-tool piece passes one, a piece pairing a product with an institution passes both. Swap `build_a` and its args for whichever of the 7 templates fits — see the table above for each function's signature; the icon argument is required on A/E/F/G, B/C/D take their icons as part of `left_icon`/`right_icon`/`items`/`icons`.)
 
-5. **View the result with the Read tool immediately.** Check: spelling of every piece of text, icon colors match the real brand (if a real logo was referenced), correct item count (no invented extra card/icon), nothing overlapping the face or headline. If something's off, retry with a tighter constraint in the prompt (edit the relevant `build_*` function's prompt string, or just call `compose()` directly with a hand-written prompt for a one-off fix) rather than shipping a flawed result.
+5. **View the result with the Read tool immediately.** Check: spelling of every piece of text, icon colors match the real brand (if a real logo was referenced — a light-glyph-on-colored-tile mark like Claude must keep its coral tile, not render as a bare white glyph), correct item count (no invented extra card/icon), nothing overlapping the face or headline. If something's off, retry with a tighter constraint in the prompt (edit the relevant `build_*` function's prompt string, or just call `compose()` directly with a hand-written prompt for a one-off fix) rather than shipping a flawed result.
 
 ### 4. Generate the 3 section images — a different job, no person, unchanged from before
 

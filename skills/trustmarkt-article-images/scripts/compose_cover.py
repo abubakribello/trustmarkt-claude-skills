@@ -85,8 +85,12 @@ def _icon_fragment(icon, index_word):
     clock or a euro-coin stack, since there's no 'correct' logo to get
     wrong). Returns (prompt_fragment, ref_path_or_None)."""
     if isinstance(icon, (str, Path)) and Path(icon).exists():
-        return (f"the {index_word} logo shown in its reference image, preserving its "
-                f"exact shape and color, do not redesign or recolor it"), Path(icon)
+        return (f"the {index_word} logo shown in its reference image, reproduced "
+                f"completely and exactly as shown — including any colored "
+                f"background tile or container it has; preserve its exact shape "
+                f"and colors, do not redesign or recolor it, do not extract only "
+                f"the symbol, and never place a bare glyph on the dark "
+                f"background as a white shape"), Path(icon)
     return f"an original glowing dark 3D icon tile of {icon}", None
 
 
@@ -100,9 +104,11 @@ def build_a(photo, headline, output, icons, person_side="right"):
     template for text/layout fidelity risk (no orbit/scatter framework to
     get wrong). `icons` is the article's prominent content brand(s):
     accepts a single logo or a list of them, rendered as a row ABOVE the
-    headline, each lifted off the dark background by a SLIGHT halo (the
-    logos themselves keep their exact colors — the halo is around them,
-    not a recolor). Pass however many brands the article prominently
+    headline, each reproduced COMPLETELY — including any colored background
+    tile it has (e.g. Claude's white starburst on its coral tile) — and
+    lifted off the dark background by a faint drop-shadow, never a white
+    halo (a halo washes out light-glyph-on-colored-tile marks into a bare
+    white shape). Pass however many brands the article prominently
     features — one for a single-tool piece, two when it pairs a product
     with an institution (e.g. ChatGPT + EU flag), etc. Each entry is a
     real logo file path for a named brand/tool (use the
@@ -118,9 +124,13 @@ def build_a(photo, headline, output, icons, person_side="right"):
         word = _ORDINALS[idx] if idx < len(_ORDINALS) else f"#{idx + 1}"
         if isinstance(icon, (str, Path)) and Path(icon).exists():
             logo_frags.append(
-                f"the {word} logo shown in its reference image, reproduced in "
-                f"its exact shape and colors — do not redesign or recolor it, "
-                f"only add a slight soft halo around it"
+                f"the {word} logo shown in its reference image, reproduced "
+                f"COMPLETELY and exactly as shown — INCLUDING any colored "
+                f"background tile or container it has; keep its exact shape "
+                f"and colors, do not redesign or recolor it, do not extract "
+                f"only the symbol, and never drop a bare glyph onto the dark "
+                f"background; lift it off the background with only a faint "
+                f"soft drop-shadow, never a white halo or glow"
             )
             refs.append(Path(icon))
         else:
@@ -136,10 +146,10 @@ def build_a(photo, headline, output, icons, person_side="right"):
         f"visible, leaving the {text_side} area clear. Near-black dark "
         f"background with a very subtle grid — the overall thumbnail stays "
         f"dark and moody. On the {text_side} side, render a row of logos ABOVE "
-        f"the headline: {logo_row}. These logos are the only brightly lit "
-        f"elements — give each a slight, clean halo so it lifts off the dark "
-        f"background, while the background and person stay dark; the halo goes "
-        f"around each logo and must never change the logo's own colors. Below "
+        f"the headline: {logo_row}. Each logo keeps its own real colors and "
+        f"any colored background tile — lift it off the dark background with "
+        f"only a faint soft drop-shadow, never a white halo or glow, and "
+        f"never change, lighten, or wash out the logo's own colors. Below "
         f"the logo row, render this exact headline in large bold white all-caps "
         f"letters, spelled exactly, perfectly legible: {headline}. Keep the "
         f"logos clearly separate from the headline letters, not overlapping "

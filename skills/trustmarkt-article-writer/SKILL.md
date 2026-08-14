@@ -108,6 +108,7 @@ These rules are derived from the top-performing articles on Agenturmarkt (automa
 7. Fazit with a concrete next step
 8. **≥2 paragraphs before the first `##` heading** — Trustmarkt's editor flags this specifically ("Introduction: There must be at least two paragraphs before the first heading"); a single merged paragraph fails validation even if everything else is fine
 9. **No link URL used twice** — every `[text](url)` in the article points to a different URL from every other one; `create-article`/`update-article` now hard-reject a repeated link URL
+10. **Every `:::callout` / `:::faq` block is closed with a bare `:::` line** — a container directive needs both an opening line (`:::callout Titel`) *and* a closing `:::` on its own line after the body. An unclosed block is **not** rejected by the API: it silently ships and renders as literal `:::callout ...` text instead of a styled box (the GFM table is unaffected because it uses no fences, which is why this hides easily). `create-article`/`update-article` now hard-reject an unclosed or stray `:::` fence client-side, but write them closed rather than relying on that to catch it.
 
 ### Image plan (report, not article body)
 
@@ -117,7 +118,7 @@ Images can't go through the API and placeholder text must never appear in the dr
 
 - Title: 10–90 characters
 - Content: Markdown, max 50,000 characters
-- Supported Markdown ONLY: `##`/`###`/`####` headings, **bold**, _italic_, [links](https://example.com), lists, `---` dividers. GFM tables and `:::faq` / `:::callout` directives are accepted on update and generally render, but keep them optional
+- Supported Markdown ONLY: `##`/`###`/`####` headings, **bold**, _italic_, [links](https://example.com), lists, `---` dividers. GFM tables and `:::faq` / `:::callout` directives are accepted on update and generally render, but keep them optional. **Each `:::` directive must be closed by a bare `:::` line** — an unclosed block renders as literal text; the script now rejects unbalanced fences client-side
 - Raw HTML is stripped server-side — never use HTML tags
 - No images via API (add them later in the web editor); mention this in your final report
 - No link URL may appear more than once in the article (checked client-side by the script, not the API itself)

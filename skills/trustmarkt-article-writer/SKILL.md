@@ -72,6 +72,17 @@ Expand these with concrete tools/branches (X = tool/service, Y = audience segmen
    ```
    The script validates constraints before sending. On success it prints the article ID, slug, and status.
 
+   **⚠️ Known bug — the create (POST) endpoint silently machine-translates the body to English.** As of 2026-08-15, the `POST /articles` endpoint runs the submitted body through an automatic English translation server-side (all paragraphs and headings come back in English), while leaving the German **title** untouched — so a German draft ends up as a German-titled, English-bodied article. The helper script does not translate; this is Trustmarkt-side behavior on create only. The **update (PUT) endpoint stores content verbatim** and does **not** translate.
+
+   **Always verify and repair right after create:** re-read the stored body and, if it came back English, re-send the same German draft via `update-article` (which stores it verbatim):
+   ```bash
+   python scripts/trustmarkt_api.py get-article --id <ID> --expand content   # inspect: is the body still German?
+   # if the body is English, fix it with a PUT that stores the German verbatim:
+   python scripts/trustmarkt_api.py update-article --id <ID> --content-file draft.md
+   python scripts/trustmarkt_api.py get-article --id <ID> --expand content   # confirm German
+   ```
+   Doing the create-then-update round-trip unconditionally is the safe default until the platform fixes the create endpoint. Confirm the final stored body is German in your report.
+
 4. **Generate the image set.** After the draft is created, run the companion skill `trustmarkt-article-images` (in a repo checkout: `skills/trustmarkt-article-images/SKILL.md`) using this article's draft and image plan — it generates cover variants plus section images, verifies each locally, then pushes the verified ones to an n8n webhook that uploads them to Google Drive. Skip only if `GEMINI_API_KEY` or `N8N_IMAGE_WEBHOOK_URL` is not set, and say so in the report.
 
 5. **Report back** with the article ID, title, word count, how many images were pushed to Drive via the webhook (or why it was skipped), and a reminder that images are inserted and the article submitted for review in the Trustmarkt web editor.
@@ -150,3 +161,4 @@ Ein Website-Relaunch entscheidet oft über Sichtbarkeit und Umsatz. …
 - `422` → print the `errors` object verbatim; usually a length violation or the 50-draft limit
 - `429` → wait 30s and retry once; if it persists, report and stop
 - Never retry blindly more than once; report failures with the exact API message
+- **English body after create** → not an error code, but a silent content bug: the create (POST) endpoint machine-translates the body to English. Fix by re-sending the German draft via `update-article` (PUT stores verbatim). See Workflow step 3 for the verify-and-repair round-trip; do it on every create.

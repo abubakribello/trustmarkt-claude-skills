@@ -101,7 +101,7 @@ This makes the dictionary grow automatically through normal use: the first artic
 Pick 3 of the 7 templates per the guidance above (question/identity + mechanism + proof is the pattern that's worked twice). For each:
 
 1. **Pick a real photo** from `assets/headshots/real-photos/` matching the cover's tone — filenames are the interface (`serious`, `smiling`, `excited-presenting`, `mindblown`, etc.). Never use an AI-regenerated pose.
-2. **Write the headline yourself** (and any icon labels/stat-card text) — the one step that genuinely needs understanding, not a lookup. Distill the article's real hook/number/argument into ALL-CAPS German, exact spelling, don't invent a stat that isn't in the article.
+2. **Write the headline yourself** (and any icon labels/stat-card text) — the one step that genuinely needs understanding, not a lookup. Distill the article's real hook/number/argument into ALL-CAPS German, exact spelling, don't invent a stat that isn't in the article. **Also write the cover's reader-facing *Bildunterschrift* here** — a short du-Form sentence that frames the article's angle (this is what goes in `--caption` at step 5.3 and the manifest's Bildunterschrift column, and what Johannes pastes under the *Vorschaubild*). Keep it separate in your head from the internal variant label ("A – Frage/Identität …"); the caption is publishable prose, the label is just picking info.
 3. **Pick the icon(s)** every template needs: an `icon_path` from step 2's `found` list (including the `generic_ai_fallback` Claude entry, if that's what's present) wherever the concept names a real brand or is AI-themed with no specific product, otherwise a plain text description of the concept.
 4. **Call the matching `build_*` function** from `scripts/compose_cover.py`:
 
@@ -158,10 +158,12 @@ Nothing gets uploaded before it's checked — the webhook only ever receives ima
    python scripts/upload_to_n8n.py --webhook-url "$N8N_IMAGE_WEBHOOK_URL" \
      --file workspace/<slug>/cover-v1.png --article-slug <slug> --filename cover-v1.png \
      --image-type cover --order 1 \
-     --caption "<German caption>" --folder-id "<FOLDER_ID from step 5.2>"
+     --caption "<German Bildunterschrift — a real reader-facing caption, not a variant label>" --folder-id "<FOLDER_ID from step 5.2>"
    ```
    Section images: `--image-type section --order N --insert-after-h2 "<the heading text it follows>"`.
-4. Build `manifest.md` (filename → insert after which H2 → German caption → one-line concept description for covers) and push it into the same subfolder:
+
+   **`--caption` is the reader-facing *Bildunterschrift* — the exact German text Johannes pastes into the caption field under the image in the editor (covers have one too, shown under the *Vorschaubild*). It is NOT a description of the variant.** Write it like a real caption: a short sentence that frames the article's angle in du-Form (e.g. `Make sitzt in der EU – trotzdem entscheidet deine Tool-Auswahl über die DSGVO-Konformität.`), never a meta-label like "Cover-Variante A: Frage mit Make-Logo". The variant/template label is internal picking info and belongs only in the manifest's separate concept column (step 5.4), not in `--caption`.
+4. Build `manifest.md` and push it into the same subfolder. Give covers **two distinct columns** so the two jobs never get conflated: a **Template/Konzept (intern)** column (the one-line variant label, e.g. "A – Frage/Identität mit Make-Logo" — only so Johannes can tell the three covers apart when picking one) and a separate **Bildunterschrift (ins Editor-Feld)** column (the real publishable caption from step 5.3's `--caption`). Section images need only filename → insert after which H2 → Bildunterschrift:
    ```bash
    python scripts/upload_to_n8n.py --webhook-url "$N8N_IMAGE_WEBHOOK_URL" \
      --manifest workspace/<slug>/manifest.md --article-slug <slug> --folder-id "<FOLDER_ID from step 5.2>"

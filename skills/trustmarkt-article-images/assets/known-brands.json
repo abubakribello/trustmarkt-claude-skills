@@ -105,6 +105,15 @@
       "fetch_name": "Perplexity",
       "type": "tool",
       "fetch_domain": "perplexity.ai"
+    },
+    {
+      "name": "DeepSeek",
+      "keywords": [
+        "deepseek"
+      ],
+      "icon": "deepseek.png",
+      "fetch_name": "deepseek",
+      "type": "tool"
     }
   ],
   "institutional": [

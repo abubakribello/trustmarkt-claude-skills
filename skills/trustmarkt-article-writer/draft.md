@@ -1,96 +1,93 @@
-Du holst dir drei Angebote für die Automatisierung eines einzigen Prozesses – und bekommst drei völlig unterschiedliche Zahlen zurück. 800 €, 2.500 €, 6.000 €. Für scheinbar dasselbe. Und du fragst dich: Wer nimmt dich hier über den Tisch?
+Du hast DeepSeek getestet und warst beeindruckt. Die Antworten sind stark, das Tempo hoch, und im Vergleich zu ChatGPT oder Claude kostet es dich fast nichts. Der Gedanke liegt nahe: Warum nicht die ganze Firma damit arbeiten lassen? Genau an diesem Punkt lohnt sich ein kurzer Stopp.
 
-Die ehrliche Antwort: meistens keiner. Der Unterschied liegt fast nie im Stundensatz, sondern in den Kosten, die auf keinem Angebot sauber ausgewiesen sind – Datenaufbereitung, Wartung, Einführung im Team. Genau die entscheiden am Ende, ob sich dein Projekt rechnet oder zum Fass ohne Boden wird.
+Denn während du die Kosten pro Anfrage rechnest, rechnet jemand anderes mit: die Datenschutzbehörden. In Deutschland und Italien sind sie 2025 aktiv gegen DeepSeek vorgegangen – nicht wegen der Qualität der KI, sondern wegen dem, was im Hintergrund mit deinen Daten passiert.
 
-In diesem Artikel bekommst du die vollständige Rechnung: was Prozessautomatisierung 2026 sichtbar kostet, welche versteckten Posten Budgets regelmäßig sprengen, und ab wann sich das Ganze wirklich lohnt. Mit echten Zahlen, damit du das nächste Angebot in zwei Minuten einordnen kannst.
+Dieser Artikel macht den ehrlichen Check: Was die Behörden konkret unternommen haben, welche Daten DeepSeek wirklich sammelt, warum die DSGVO-konforme Nutzung so schwierig ist – und wie du die Stärke des Modells trotzdem nutzt, ohne die Daten deiner Kunden nach China zu schicken.
 
-## Warum jedes Angebot anders aussieht – und keins vollständig ist
+## Warum Behörden DeepSeek 2025 gestoppt haben
 
-Automatisierung wird pro Workflow abgerechnet, nicht pauschal. Ein Workflow ist eine abgeschlossene Aufgabe, die vorher ein Mensch von Hand gemacht hat: eingehende Anfragen qualifizieren, Termine bestätigen, Rechnungen erfassen, Leads ins CRM schreiben.
+Der Reihe nach. Anfang 2025 ordnete die italienische Datenschutzbehörde Garante an, den Zugriff auf DeepSeek zu beschränken – zu unklar sei, wie und wo die Daten der Nutzer verarbeitet werden.
 
-Ein einzelner produktiver Workflow startet 2026 bei rund 500–800 € für Konzeption und Umsetzung. Komplexere Automatisierungen mit mehreren Systemen und Sonderfällen liegen realistisch bei 1.000–3.000 € pro Workflow, mit einer Umsetzungszeit von zwei bis fünf Tagen.
+In Deutschland folgte der nächste Schlag am 27. Juni 2025: Die Berliner Beauftragte für Datenschutz meldete die DeepSeek-App bei Apple und Google als rechtswidrigen Inhalt und verlangte eine Prüfung zur Sperrung in den App-Stores. Die Begründung: DeepSeek überträgt personenbezogene Daten nach China, ohne die Voraussetzungen der DSGVO für einen solchen Drittlandtransfer zu erfüllen.
 
-Der Grund für die Spanne: Ein Angebot rechnet nur die Umsetzung, das nächste bezieht die Datenaufbereitung mit ein, das dritte kalkuliert schon Wartung und Support für ein Jahr dazu. Du vergleichst also selten Äpfel mit Äpfeln – und genau da fangen die teuren Missverständnisse an.
+Zusätzlich warnt das Bundesamt für Sicherheit in der Informationstechnik (BSI), dass Tastatureingaben innerhalb der App potenziell schon vor dem Absenden mitgelesen werden können. Das ist keine Kleinigkeit: Aus dem Tippverhalten lassen sich Rückschlüsse auf Identität, Verhalten – im Zweifel sogar auf Passwörter – ziehen.
 
-## Die sichtbaren Kosten: Was auf dem Angebot steht
-
-Das hier ist der Teil, den fast jeder Anbieter aufschreibt. Er sieht überschaubar aus – und ist es oft auch:
-
-| Kostenblock | Typische Spanne | Art |
-| --- | --- | --- |
-| Konzeption & Umsetzung (1 Workflow) | 500–3.000 € | einmalig |
-| Tool-Lizenzen & API-Kosten (z. B. Automatisierungsplattform, KI-Nutzung) | 20–200 € | pro Monat |
-| Wartung & Anpassungen | 10–20 % der Projektsumme | pro Jahr |
-| Schulung & Einführung im Team | 0,5–2 Tage Arbeitszeit | einmalig |
-
-Wenn du nur diese Tabelle siehst, wirkt Automatisierung günstig. Der Haken: Der größte Kostenblock steht hier gar nicht drin.
-
-## Die versteckten Kosten, die Budgets sprengen
-
-Der Posten, der die meisten Projekte teurer macht als geplant, heißt Datenaufbereitung. Bevor eine Automatisierung sauber läuft, müssen deine Daten stimmen: dubletten-bereinigte Kontakte, einheitliche Felder, klar definierte Prozesse ohne "das machen wir immer irgendwie anders". In der Praxis frisst dieser Schritt bis zu 40 % des Projektbudgets – bei einem 2.500-€-Projekt also rund 1.000 €, die im ersten Angebot niemand erwähnt hat.
-
-Dazu kommen drei weitere Posten, die gern untergehen:
-
-- **Laufende Kosten** für Hosting, Tool-Lizenzen und KI-Nutzung. Klingt klein, summiert sich aber: 60 € im Monat sind 720 € im Jahr – jedes Jahr.
-- **Wartung.** Schnittstellen ändern sich, Tools bekommen Updates, ein neuer Sonderfall taucht auf. Ohne Wartung steht dein Workflow irgendwann still – genau dann, wenn du dich am meisten auf ihn verlässt.
-- **Schulung und Change.** Die beste Automatisierung bringt nichts, wenn dein Team sie umgeht, weil es den alten Weg gewohnt ist. Zeit für Einführung und Akzeptanz ist echte Arbeitszeit – plan sie ein.
-
-:::callout Achtung
-Frag bei jedem Angebot explizit nach drei Zahlen: Was kostet die Datenaufbereitung, was kostet die laufende Wartung pro Jahr, und was zahlst du monatlich an Tools und KI-Nutzung? Fehlt eine davon, ist das Angebot nicht zu günstig – es ist unvollständig.
+:::callout Wichtig zu verstehen
+DeepSeek ist in Deutschland nicht pauschal "verboten". Aber wenn du es geschäftlich mit Kunden- oder Mitarbeiterdaten nutzt, bist du als Unternehmen verantwortlich – nicht der Anbieter. Und genau diese Nutzung sehen die Aufsichtsbehörden aktuell kritisch.
 :::
+
+## Was DeepSeek wirklich über dich und deine Kunden sammelt
+
+Ein Blick in die Datenschutzangaben von DeepSeek zeigt, warum die Behörden nervös sind. Gesammelt und auf Servern in China gespeichert werden unter anderem:
+
+- E-Mail-Adresse, Telefonnummer und Geburtsdatum aus der Registrierung
+- Sämtliche Eingaben – also jeder Text und jede Audioaufnahme, die du hineingibst
+- Der komplette Chatverlauf
+- Technische Daten wie Gerätemodell, Betriebssystem und IP-Adresse
+- Tastatureingabe-Muster und -Rhythmen
+
+Das entscheidende Detail: Die Speicherung erfolgt auf Servern in China, ohne Opt-out. Nach chinesischer Rechtslage können staatliche Stellen auf diese Daten zugreifen. Sobald ein Mitarbeiter also einen Kundennamen, eine Vertragsklausel oder eine interne Kalkulation in DeepSeek eintippt, verlässt diese Information deinen Verantwortungsbereich – endgültig und unkontrollierbar.
+
+## Das DSGVO-Problem in drei Punkten
+
+Warum ist die Cloud-Version von DeepSeek für den Geschäftseinsatz so schwierig? Es sind drei Bausteine, die fehlen – und jeder einzelne reicht schon aus:
+
+1. **Kein Angemessenheitsbeschluss.** Zwischen der EU und China gibt es keine Entscheidung, die ein vergleichbares Datenschutzniveau bestätigt. Jeder Datentransfer braucht deshalb zusätzliche Garantien, die DeepSeek nicht liefert.
+2. **Kein Auftragsverarbeitungsvertrag (AVV).** Nach Art. 28 DSGVO brauchst du mit jedem Dienstleister, der für dich personenbezogene Daten verarbeitet, einen AVV. Für DeepSeek Cloud gibt es keinen.
+3. **Kein EU-Vertreter.** Ein Anbieter aus einem Drittland muss nach Art. 27 DSGVO einen Vertreter in der EU benennen. Auch das fehlt.
+
+Ohne diese Grundlage ist die geschäftliche Nutzung der Cloud-Version mit echten Personendaten praktisch nicht DSGVO-konform darstellbar.
+
+## Cloud, Self-Hosted oder EU-Anbieter: der direkte Vergleich
+
+Die gute Nachricht: "DeepSeek nutzen" ist keine reine Ja/Nein-Frage. Die Modelle R1 und V3 sind quelloffen (open-weight) – du kannst sie also auf eigener oder europäischer Infrastruktur betreiben. Dann verlässt kein einziges Byte deine Kontrolle.
+
+| Variante | Wo liegen die Daten? | AVV / Drittland | Für Personendaten geeignet? |
+| --- | --- | --- | --- |
+| DeepSeek App/Cloud | Server in China | Kein AVV, kein EU-Vertreter | Nein |
+| DeepSeek selbst gehostet (EU) | Deine/EU-Infrastruktur | Kein Transfer nötig | Ja, mit sauberem Setup |
+| Etablierter EU-tauglicher Anbieter | EU-Rechenzentrum, AVV vorhanden | AVV inklusive | Ja |
+
+Die Stärke von DeepSeek liegt im Modell selbst – nicht im chinesischen Cloud-Dienst. Wer die Leistung will, aber den Datenabfluss nicht, hostet das offene Modell in Europa. Technisch ist das heute Standard, kein Sonderprojekt.
 
 ## Die Rechnung, die kaum jemand macht
 
-Kosten allein sagen nichts. Entscheidend ist, was ein Workflow auf der anderen Seite einspart. Rechnen wir ein realistisches Beispiel durch – einen Workflow, der eingehende Anfragen automatisch qualifiziert und Termine bucht:
+Rechnen wir kurz gegen, was hier wirklich auf dem Spiel steht. Angenommen, du sparst dir mit der kostenlosen Cloud-Version im Monat 200 € gegenüber einem bezahlten EU-Anbieter – über ein Jahr also 2.400 €.
 
-**Kosten im ersten Jahr:**
-
-- Umsetzung: 1.800 € einmalig
-- Datenaufbereitung: 700 € einmalig
-- Laufende Tools & KI: 60 €/Monat = 720 € im Jahr
-- **Gesamt Jahr 1: ca. 3.220 €**
-
-**Ersparnis:** Der Workflow nimmt deinem Team rund 8 Stunden pro Woche ab – etwa 35 Stunden im Monat. Rechne konservativ mit 45 € interner Kosten pro Stunde, dann sind das 1.575 € pro Monat oder rund 18.900 € im Jahr.
-
-Unterm Strich stehen im ersten Jahr etwa 3.220 € Kosten gegen 18.900 € eingesparte Arbeitszeit. Der Break-even liegt nicht bei Jahren, sondern nach gut zwei Monaten – und ab Jahr zwei fallen die einmaligen Posten weg.
-
-Diese Größenordnung ist kein Wunschdenken. Eine 5-köpfige Dev-Agentur hat mit automatisierten Abläufen 35–50 vorher verlorene Stunden pro Monat wieder abrechenbar gemacht (Fallstudie: [Software-Beratung](https://www.agenturmarkt.de/agentur/digitalxshift-johannes-kofler-wallerfangen/fallstudien/software-beratung)). Ein B2B-SaaS-Gründer hat 52 Stunden im Monat zurückgewonnen, die vorher in eigenen Tabellen versickert sind (Fallstudie: [B2B-SaaS](https://www.agenturmarkt.de/agentur/digitalxshift-johannes-kofler-wallerfangen/fallstudien/b2b-saas)).
-
-## Ab wann sich Automatisierung wirklich rechnet
-
-Der häufigste Denkfehler: "Wir sind zu klein dafür." Entscheidend ist nicht deine Mitarbeiterzahl, sondern das Volumen wiederkehrender Aufgaben. Ein Solo-Selbstständiger mit 40 gleichen Anfragen pro Woche hat mehr Automatisierungspotenzial als eine 20-köpfige Firma mit lauter Einzelfällen.
-
-Die Faustregel: Sobald eine Aufgabe (a) regelmäßig anfällt, (b) klaren Regeln folgt und (c) Zeit oder Umsatz kostet, wenn sie liegen bleibt, lohnt sich der Blick auf Automatisierung. Der teuerste Fall ist oft der, den niemand als Kostenstelle sieht – verpasste Anfragen außerhalb der Geschäftszeiten. Ein Autoteilehändler hat genau deshalb nach 18 Uhr keine Bestellungen mehr verloren, seit die Anfragen automatisch angenommen und bearbeitet werden (Fallstudie: [KFZ-Teilehändler](https://www.agenturmarkt.de/agentur/digitalxshift-johannes-kofler-wallerfangen/fallstudien/kfz-teilehandler-biedenkopf-hessen-anonymisiert)).
+Dem gegenüber steht das Bußgeldrisiko der DSGVO: bis zu 20 Millionen Euro oder 4 % deines weltweiten Jahresumsatzes – je nachdem, welcher Betrag höher ist. Dazu kommt das realistischere Alltagsrisiko: eine Abmahnung, weil ein Wettbewerber oder ein Betroffener den unzulässigen Drittlandtransfer entdeckt, plus der Vertrauensverlust, wenn ein Kunde erfährt, dass seine Daten auf chinesischen Servern gelandet sind.
 
 :::callout Profi-Tipp
-Fang mit dem Prozess an, der am meisten wehtut, nicht mit dem, der am einfachsten zu automatisieren ist. Ein Workflow, der pro Monat 30 Stunden oder mehrere verlorene Aufträge spart, finanziert die nächsten drei Automatisierungen von selbst.
+Bevor irgendein KI-Tool im Team ausgerollt wird: Kläre eine einzige Frage – "Verlässt personenbezogene Datenverarbeitung damit die EU?" Wenn die Antwort ja oder unklar ist, brauchst du eine andere Lösung oder ein anderes Setup. Diese eine Frage verhindert die meisten teuren Fehler.
 :::
 
-## Wie du teure Fehler vermeidest
+Die eingesparten 2.400 € sind schnell weg, wenn nur ein Teil dieser Risiken eintritt. Das ist keine Panikmache – es ist schlicht Erwartungswert-Rechnung.
 
-- **Do:** Lass dir jedes Angebot mit einzelnen Kostenblöcken geben – Umsetzung, Datenaufbereitung, laufende Kosten, Wartung getrennt.
-- **Do:** Rechne immer gegen die eingesparte Arbeitszeit, nicht gegen den Preis allein. Ein 3.000-€-Workflow, der 15.000 € Arbeitszeit spart, ist günstiger als ein 800-€-Workflow, der nichts bewegt.
-- **Don't:** Nicht das billigste Angebot nehmen, nur weil weniger draufsteht. Meistens fehlen einfach die teuren Posten.
-- **Don't:** Nicht alles auf einmal automatisieren wollen. Ein sauber laufender Workflow schlägt fünf halbfertige.
+## Wie du DeepSeeks Stärke nutzt, ohne das Risiko
 
----
+Du musst nicht zwischen guter KI und Datenschutz wählen. In der Praxis funktionieren drei Wege:
+
+- **Modell in Europa hosten.** DeepSeek R1/V3 auf EU-Infrastruktur betreiben – die Leistung bleibt, die Daten auch. Das ist der sauberste Weg, wenn du die Modellqualität konkret brauchst.
+- **Sauber trennen.** Für rein anonyme, nicht personenbezogene Aufgaben (z. B. allgemeine Textbausteine, Code-Snippets ohne Kundenbezug) ist das Risiko gering. Sobald echte Personendaten ins Spiel kommen, greift Regel eins.
+- **In eine geprüfte Automatisierung einbetten.** Statt dass 5 Mitarbeiter unkontrolliert Kundendaten in irgendein Chatfenster tippen, läuft die KI in einem definierten, DSGVO-konform aufgesetzten Workflow – mit klarer Datenhaltung und Zugriffskontrolle.
+
+Genau dieser dritte Weg ist der, den wir bei DigitalXShift bauen: KI-gestützte Prozesse auf Infrastruktur, die dir gehört. Wie ein B2B-SaaS-Gründer damit 52 Stunden im Monat aus seinen eigenen Tabellen zurückholte, zeigt diese [Fallstudie](https://www.agenturmarkt.de/agentur/digitalxshift-johannes-kofler-wallerfangen/fallstudien/b2b-saas). Und wie eine 5-köpfige Dev-Agentur 35–50 verlorene Stunden pro Monat wieder abrechenbar machte, liest du [hier](https://www.agenturmarkt.de/agentur/digitalxshift-johannes-kofler-wallerfangen/fallstudien/software-beratung) – in beiden Fällen ohne Datenabfluss in ein Drittland.
 
 ## Fazit
 
-Prozessautomatisierung kostet 2026 selten das, was auf dem ersten Angebot steht – und rechnet sich trotzdem fast immer, wenn du den richtigen Prozess wählst. Die sichtbaren Kosten liegen bei 500–3.000 € pro Workflow, die versteckten (Datenaufbereitung, Wartung, laufende Tools) machen den Unterschied zwischen einer realistischen und einer geschönten Rechnung. Und der Nutzen – eingesparte Arbeitszeit und nicht mehr verlorene Aufträge – übersteigt die Kosten meist um ein Vielfaches.
+DeepSeek ist ein technisch starkes Modell – aber die chinesische Cloud-Version ist für den Geschäftseinsatz mit Kundendaten aktuell ein echtes DSGVO-Risiko. Die Behörden haben 2025 nicht ohne Grund reagiert: fehlender AVV, kein EU-Vertreter, Datenspeicherung in China ohne Opt-out. Die gute Nachricht ist, dass du die Modellqualität trotzdem haben kannst – wenn du es in Europa hostest oder in einen sauber aufgesetzten Workflow packst.
 
-Schau dir diese Woche einen einzigen Prozess an, der bei dir regelmäßig Zeit frisst. Notier ehrlich, wie viele Stunden im Monat er kostet, und multiplizier sie mit deinem internen Stundensatz. Diese eine Zahl sagt dir mehr über die Wirtschaftlichkeit einer Automatisierung als jedes Angebot. Wenn du bei der Einordnung eine zweite Meinung willst, findest du bei [DigitalXShift](https://digitalxshift.com) den ehrlichen Blick auf Kosten und Nutzen.
+Dein nächster Schritt für diese Woche: Geh einmal ehrlich durch, welche KI-Tools in deinem Team aktuell genutzt werden – auch die inoffiziellen. Bei jedem stell die eine Frage: "Verlassen dabei personenbezogene Daten die EU?" Wo du kein klares Nein hast, hast du deinen ersten Handlungspunkt gefunden. Wenn du dabei Unterstützung willst, [sprich mit uns](https://digitalxshift.com).
 
 :::faq
-### Was kostet die Automatisierung eines einzelnen Prozesses?
-Ein produktiver Workflow startet bei 500–800 € und liegt bei mehreren Systemen realistisch bei 1.000–3.000 € – einmalig für Konzeption und Umsetzung, plus laufende Kosten für Tools und Wartung.
+### Ist DeepSeek in Deutschland verboten?
+Nein, nicht pauschal. Aber die Berliner Datenschutzbeauftragte hat die App im Juni 2025 bei Apple und Google zur Prüfung einer Sperrung gemeldet, und die geschäftliche Nutzung mit Personendaten sehen die Aufsichtsbehörden als DSGVO-widrig an.
 
-### Welche Kosten werden am häufigsten unterschätzt?
-Die Datenaufbereitung. Sie kann bis zu 40 % des Projektbudgets ausmachen, taucht aber selten sauber im Erstangebot auf. Dazu kommen laufende Tool- und Wartungskosten.
+### Wo speichert DeepSeek meine Daten?
+Die Cloud-Version speichert Daten auf Servern in China – inklusive Eingaben, Chatverläufen, Kontaktdaten und Tastatureingabemustern, ohne Opt-out.
 
-### Lohnt sich Automatisierung auch für kleine Unternehmen?
-Ja – entscheidend ist nicht die Mitarbeiterzahl, sondern das Volumen wiederkehrender Aufgaben. Schon ein Solo-Selbstständiger mit vielen gleichartigen Anfragen kann deutlich profitieren.
+### Kann ich DeepSeek überhaupt DSGVO-konform einsetzen?
+Die offene Cloud-Version praktisch nicht. Da die Modelle aber quelloffen sind, kannst du sie auf eigener oder europäischer Infrastruktur betreiben – dann bleiben die Daten in deiner Kontrolle.
 
-### Wie schnell rechnet sich eine Automatisierung?
-Bei einem Workflow, der 20–35 Stunden Arbeit im Monat spart, liegt der Break-even oft schon nach wenigen Monaten. Ab dem zweiten Jahr fallen die einmaligen Kosten weg und der Nutzen bleibt.
+### Was ist der Unterschied zwischen dem Modell und dem Dienst?
+Das Modell (R1/V3) ist die KI selbst und open-weight verfügbar. Der problematische Teil ist der chinesische Cloud-Dienst drumherum. Trennst du beides, nutzt du die Leistung ohne den Datenabfluss.
 :::

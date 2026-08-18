@@ -1,6 +1,9 @@
 # Generated image-skill artifacts (renders, manifests, working files)
 skills/trustmarkt-article-images/workspace/
 
+# Scratchpad / local temp working files
+scratchpad/
+
 # Python bytecode caches
 __pycache__/
 *.pyc

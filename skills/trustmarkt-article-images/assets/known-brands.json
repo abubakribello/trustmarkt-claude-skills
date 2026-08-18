@@ -105,6 +105,16 @@
       "fetch_name": "Perplexity",
       "type": "tool",
       "fetch_domain": "perplexity.ai"
+    },
+    {
+      "name": "Mistral",
+      "keywords": [
+        "mistral"
+      ],
+      "icon": "mistral.png",
+      "fetch_name": "Mistral AI",
+      "fetch_domain": "mistral.ai",
+      "type": "tool"
     }
   ],
   "institutional": [

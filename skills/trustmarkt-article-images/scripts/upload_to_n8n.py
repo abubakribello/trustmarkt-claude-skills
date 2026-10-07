@@ -49,7 +49,10 @@ Webhook contract (multipart/form-data):
   image_type      "cover" | "section" (image mode only)
   order           int, position within its group (image mode only)
   insert_after_h2 heading text this section image follows (section only)
-  caption         German caption text
+  caption         German caption text (Bildunterschrift), max 90 chars —
+                   it goes into the Trustmarkt editor's caption field,
+                   which is capped at 90 characters; longer captions are
+                   rejected client-side before the webhook is called
   markdown        manifest content (manifest mode only)
   image           binary file part (image mode only)
 
@@ -65,6 +68,11 @@ import sys
 import urllib.error
 import urllib.request
 import uuid
+
+# The Trustmarkt editor's image-caption (Bildunterschrift) field is capped
+# at 90 characters. Captions are rejected client-side above this so an
+# over-long one never reaches Drive and gets pasted in only to be truncated.
+MAX_CAPTION_CHARS = 90
 
 
 def build_multipart(fields, file_field=None, file_path=None):
@@ -108,7 +116,9 @@ def main():
     p.add_argument("--webhook-url", default=os.environ.get("N8N_IMAGE_WEBHOOK_URL"))
     p.add_argument("--folder-id", default=os.environ.get("N8N_IMAGE_DRIVE_FOLDER_ID"))
     p.add_argument("--article-slug", required=True)
-    p.add_argument("--caption", default="")
+    p.add_argument("--caption", default="",
+                    help=f"German Bildunterschrift, max {MAX_CAPTION_CHARS} chars "
+                         "(editor caption-field limit); longer is rejected")
 
     p.add_argument("--file", help="Verified image file to upload")
     p.add_argument("--filename", help="Target filename in Drive (image mode)")
@@ -128,6 +138,13 @@ def main():
     modes = [bool(args.file), bool(args.manifest), args.create_folder]
     if sum(modes) != 1:
         sys.exit("Pass exactly one of --create-folder, --file (verified image), or --manifest.")
+    if len(args.caption) > MAX_CAPTION_CHARS:
+        sys.exit(
+            f"Caption too long: {len(args.caption)} chars (max {MAX_CAPTION_CHARS}). "
+            "The Trustmarkt editor caption field is capped at 90 characters — "
+            "shorten the Bildunterschrift and retry:\n  "
+            + args.caption
+        )
 
     fields = {
         "folder_id": args.folder_id,

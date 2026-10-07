@@ -115,6 +115,18 @@
       "fetch_name": "Mistral AI",
       "fetch_domain": "mistral.ai",
       "type": "tool"
+    },
+    {
+      "name": "Grok",
+      "keywords": [
+        "grok",
+        "xai",
+        "x.ai"
+      ],
+      "icon": "grok.png",
+      "fetch_name": "Grok",
+      "fetch_domain": "x.ai",
+      "type": "tool"
     }
   ],
   "institutional": [
